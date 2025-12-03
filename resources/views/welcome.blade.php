@@ -228,8 +228,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold mb-4">Gratis Ongkir</h3>
-                <p class="text-primary">Gratis ongkir untuk semua pesanan di atas Rp 1.000.000</p>
+                <h3 class="text-xl font-bold mb-4">Pelayanan Memuaskan</h3>
+                <p class="text-primary">Customer care via whatsapp yang aktif selalu untuk anda</p>
             </div>
         </div>
     </div>
@@ -246,17 +246,11 @@
                     Sejak 1995, ZANOV telah menghadirkan keanggunan dalam setiap langkah dengan koleksi sepatu premium yang menggabungkan craftsmanship tradisional dan desain kontemporer.
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-accent hover:text-accent transition duration-300">
-                        <i data-feather="facebook" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="text-accent hover:text-accent transition duration-300">
+                    <a href="https://instagram.com/zanov" target="_blank" class="text-accent hover:text-accent transition duration-300">
                         <i data-feather="instagram" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="text-accent hover:text-accent transition duration-300">
-                        <i data-feather="twitter" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="text-accent hover:text-accent transition duration-300">
-                        <i data-feather="youtube" class="w-5 h-5"></i>
+                    <a href="https://wa.me/62895383027843" target="_blank" class="text-accent hover:text-accent transition duration-300">
+                        <i data-feather="phone" class="w-5 h-5"></i>
                     </a>
                 </div>
             </div>
@@ -278,15 +272,15 @@
                 <div class="space-y-3">
                     <div class="flex items-start space-x-3">
                         <i data-feather="map-pin" class="w-5 h-5 text-accent mt-0.5"></i>
-                        <span class="text-accent">Jl. Kemang Raya No. 12<br>Jakarta Selatan</span>
+                        <span class="text-accent">Jl. Arsadimeja RT 3/4<br>Teluk, Purwokerto Selatan</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <i data-feather="phone" class="w-5 h-5 text-accent"></i>
-                        <span class="text-accent">+62 21 1234 5678</span>
+                        <span class="text-accent">+62 895 3830 27843</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <i data-feather="mail" class="w-5 h-5 text-accent"></i>
-                        <span class="text-accent">hello@zanov.com</span>
+                        <span class="text-accent">zanov@gmail.com</span>
                     </div>
                 </div>
             </div>
@@ -295,13 +289,13 @@
         <!-- Bottom Bar -->
         <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p class="text-accent text-sm mb-4 md:mb-0">
-                &copy; 2024 ZANOV. All rights reserved.
+                &copy; 2025 ZANOV. All rights reserved.
             </p>
-            <div class="flex space-x-6 text-sm">
+            <!-- <div class="flex space-x-6 text-sm">
                 <a href="#" class="text-accent hover:text-accent transition duration-300">Privacy Policy</a>
                 <a href="#" class="text-accent hover:text-accent transition duration-300">Terms of Service</a>
                 <a href="#" class="text-accent hover:text-accent transition duration-300">Cookie Policy</a>
-            </div>
+            </div> -->
         </div>
     </div>
 </footer>
