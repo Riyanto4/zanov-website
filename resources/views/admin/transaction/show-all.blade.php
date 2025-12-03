@@ -131,6 +131,199 @@
         </div>
     </div>
 
+    <!-- Filter Section -->
+<div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
+    <form method="GET" action="{{ route('transactions.all') }}" id="filterForm">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <!-- Search -->
+            <div>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <input type="text" 
+                       name="search" 
+                       id="search" 
+                       value="{{ $filters['search'] ?? '' }}"
+                       placeholder="Reference No, Customer, Email"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <!-- Status Filter -->
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select name="status" 
+                        id="status"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="all" {{ ($filters['status'] ?? 'all') == 'all' ? 'selected' : '' }}>All Status</option>
+                    <option value="PENDING" {{ ($filters['status'] ?? '') == 'PENDING' ? 'selected' : '' }}>Pending</option>
+                    <option value="PAID" {{ ($filters['status'] ?? '') == 'PAID' ? 'selected' : '' }}>Paid</option>
+                    <option value="CANCELED" {{ ($filters['status'] ?? '') == 'CANCELED' ? 'selected' : '' }}>Canceled</option>
+                    <option value="REFUNDED" {{ ($filters['status'] ?? '') == 'REFUNDED' ? 'selected' : '' }}>Refunded</option>
+                </select>
+            </div>
+
+            <!-- Payment Method Filter -->
+            <div>
+                <label for="payment_method" class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                <select name="payment_method" 
+                        id="payment_method"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="all" {{ ($filters['payment_method'] ?? 'all') == 'all' ? 'selected' : '' }}>All Methods</option>
+                    <option value="CASH" {{ ($filters['payment_method'] ?? '') == 'CASH' ? 'selected' : '' }}>Cash</option>
+                    <option value="TRANSFER" {{ ($filters['payment_method'] ?? '') == 'TRANSFER' ? 'selected' : '' }}>Transfer</option>
+                    <option value="QRIS" {{ ($filters['payment_method'] ?? '') == 'QRIS' ? 'selected' : '' }}>QRIS</option>
+                </select>
+            </div>
+
+            <!-- Sort By -->
+            <div>
+                <label for="sort_by" class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                <select name="sort_by" 
+                        id="sort_by"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="created_at" {{ ($filters['sort_by'] ?? 'created_at') == 'created_at' ? 'selected' : '' }}>Date</option>
+                    <option value="total_amount" {{ ($filters['sort_by'] ?? '') == 'total_amount' ? 'selected' : '' }}>Total Amount</option>
+                    <option value="reference_no" {{ ($filters['sort_by'] ?? '') == 'reference_no' ? 'selected' : '' }}>Reference No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <!-- Date Range -->
+            <div>
+                <label for="date_from" class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
+                <input type="date" 
+                       name="date_from" 
+                       id="date_from" 
+                       value="{{ $filters['date_from'] ?? '' }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <div>
+                <label for="date_to" class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
+                <input type="date" 
+                       name="date_to" 
+                       id="date_to" 
+                       value="{{ $filters['date_to'] ?? '' }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <!-- Sort Order -->
+            <div>
+                <label for="sort_order" class="block text-sm font-medium text-gray-700 mb-1">Sort Order</label>
+                <select name="sort_order" 
+                        id="sort_order"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="desc" {{ ($filters['sort_order'] ?? 'desc') == 'desc' ? 'selected' : '' }}>Newest First</option>
+                    <option value="asc" {{ ($filters['sort_order'] ?? '') == 'asc' ? 'selected' : '' }}>Oldest First</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <div class="text-sm text-gray-500">
+                Showing {{ $transactions->firstItem() ?? 0 }} to {{ $transactions->lastItem() ?? 0 }} of {{ $transactions->total() }} results
+            </div>
+            
+            <div class="flex space-x-2">
+                <button type="submit" 
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <i data-feather="filter" class="w-4 h-4 mr-2"></i>
+                    Apply Filters
+                </button>
+                
+                <a href="{{ route('transactions.all') }}" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
+                    Reset Filters
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Active Filters Badges (tambahkan setelah filter section) -->
+@if(collect($filters)->filter(fn($value, $key) => $key !== 'sort_by' && $key !== 'sort_order' && !empty($value))->count() > 0)
+<div class="mb-6">
+    <div class="flex flex-wrap gap-2 items-center">
+        <span class="text-sm font-medium text-gray-700">Active Filters:</span>
+        @if($filters['search'])
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                Search: "{{ $filters['search'] }}"
+                <a href="{{ route('transactions.all', array_merge(request()->except('search'), ['page' => 1])) }}" 
+                   class="ml-1 text-blue-600 hover:text-blue-800">
+                    ×
+                </a>
+            </span>
+        @endif
+        
+        @if($filters['status'] && $filters['status'] !== 'all')
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                Status: {{ $filters['status'] }}
+                <a href="{{ route('transactions.all', array_merge(request()->except('status'), ['page' => 1])) }}" 
+                   class="ml-1 text-purple-600 hover:text-purple-800">
+                    ×
+                </a>
+            </span>
+        @endif
+        
+        @if($filters['payment_method'] && $filters['payment_method'] !== 'all')
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                Payment: {{ $filters['payment_method'] }}
+                <a href="{{ route('transactions.all', array_merge(request()->except('payment_method'), ['page' => 1])) }}" 
+                   class="ml-1 text-green-600 hover:text-green-800">
+                    ×
+                </a>
+            </span>
+        @endif
+        
+        @if($filters['date_from'])
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                From: {{ \Carbon\Carbon::parse($filters['date_from'])->format('d M Y') }}
+                <a href="{{ route('transactions.all', array_merge(request()->except('date_from'), ['page' => 1])) }}" 
+                   class="ml-1 text-yellow-600 hover:text-yellow-800">
+                    ×
+                </a>
+            </span>
+        @endif
+        
+        @if($filters['date_to'])
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                To: {{ \Carbon\Carbon::parse($filters['date_to'])->format('d M Y') }}
+                <a href="{{ route('transactions.all', array_merge(request()->except('date_to'), ['page' => 1])) }}" 
+                   class="ml-1 text-yellow-600 hover:text-yellow-800">
+                    ×
+                </a>
+            </span>
+        @endif
+    </div>
+</div>
+@endif
+
+<style>
+/* Hide the calendar icon in date inputs */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+    filter: invert(0.5);
+}
+
+/* Style for active filter badges */
+.filter-badge {
+    transition: all 0.2s ease;
+}
+
+.filter-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .filter-form .grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
     <!-- Transactions Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
@@ -248,24 +441,38 @@
     </div>
 </div>
 
-@push('scripts')
-    <!-- Include ApexCharts -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    {!! $chart->script() !!}
+{{-- Date validation script --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dateFrom = document.getElementById('date_from');
+    const dateTo = document.getElementById('date_to');
+    const form = document.getElementById('filterForm');
     
-    <!-- Initialize Feather Icons -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
-            
-            // Add tooltips for status badges
-            const statusBadges = document.querySelectorAll('[class*="bg-"]');
-            statusBadges.forEach(badge => {
-                badge.setAttribute('title', 'Payment Status');
-            });
+    if (dateFrom && dateTo) {
+        // Set max date for date_from
+        dateFrom.addEventListener('change', function() {
+            dateTo.min = this.value;
         });
-    </script>
-@endpush
+        
+        // Set min date for date_to
+        dateTo.addEventListener('change', function() {
+            dateFrom.max = this.value;
+        });
+    }
+    
+    // Auto-submit when select changes (optional)
+    const autoSubmitSelects = ['status', 'payment_method', 'sort_by', 'sort_order'];
+    autoSubmitSelects.forEach(selectId => {
+        const select = document.getElementById(selectId);
+        if (select) {
+            select.addEventListener('change', function() {
+                // Submit form only if not in the middle of filtering
+                if (!form.classList.contains('filtering')) {
+                    form.submit();
+                }
+            });
+        }
+    });
+});
+</script>
 @endsection

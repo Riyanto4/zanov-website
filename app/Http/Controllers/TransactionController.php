@@ -24,22 +24,69 @@ class TransactionController extends Controller
         $this->chart = $chart;
     }
     
-    public function showAll()
+    public function showAll(Request $request)
     {
-        $transactions = Transaction::with(['items.product', 'user', 'verifier'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        // Ambil parameter filter dari request
+        $status = $request->input('status');
+        $paymentMethod = $request->input('payment_method');
+        $dateFrom = $request->input('date_from');
+        $dateTo = $request->input('date_to');
+        $search = $request->input('search');
+        $sortBy = $request->input('sort_by', 'created_at');
+        $sortOrder = $request->input('sort_order', 'desc');
+
+        // Query dasar dengan eager loading
+        $query = Transaction::with(['items.product', 'user', 'verifier']);
+
+        // Filter berdasarkan status
+        if ($status && $status !== 'all') {
+            $query->where('payment_status', $status);
+        }
+
+        // Filter berdasarkan metode pembayaran
+        if ($paymentMethod && $paymentMethod !== 'all') {
+            $query->where('payment_method', $paymentMethod);
+        }
+
+        // Filter berdasarkan tanggal
+        if ($dateFrom) {
+            $query->whereDate('created_at', '>=', $dateFrom);
+        }
         
-        // Data untuk pie chart
+        if ($dateTo) {
+            $query->whereDate('created_at', '<=', $dateTo);
+        }
+
+        // Filter berdasarkan pencarian (reference_no atau nama customer)
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('reference_no', 'like', "%{$search}%")
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhereHas('user', function($userQuery) use ($search) {
+                    $userQuery->where('email', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // Sorting
+        $validSortColumns = ['created_at', 'total_amount', 'payment_status', 'reference_no'];
+        $sortBy = in_array($sortBy, $validSortColumns) ? $sortBy : 'created_at';
+        $sortOrder = $sortOrder === 'asc' ? 'asc' : 'desc';
+        
+        $query->orderBy($sortBy, $sortOrder);
+
+        // Paginate results
+        $transactions = $query->paginate(10)->appends($request->except('page'));
+
+        // Data untuk chart (tetap semua data)
         $statusData = Transaction::select('payment_status')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('payment_status')
             ->get();
-        
-        // Persiapkan data untuk chart
+
         $statusLabels = $statusData->pluck('payment_status')->toArray();
         $statusCounts = $statusData->pluck('count')->toArray();
-        
+
         // Buat chart
         $chart = app(LarapexChart::class)->donutChart()
             ->setTitle('Distribution of Transaction Status')
@@ -49,7 +96,18 @@ class TransactionController extends Controller
             ->setColors(['#22c55e', '#f97316', '#ef4444', '#6b7280', '#8b5cf6'])
             ->setHeight(250);
 
-        return view('admin.transaction.show-all', compact('transactions', 'chart'));
+        // Get filter values for view
+        $filters = [
+            'status' => $status,
+            'payment_method' => $paymentMethod,
+            'date_from' => $dateFrom,
+            'date_to' => $dateTo,
+            'search' => $search,
+            'sort_by' => $sortBy,
+            'sort_order' => $sortOrder,
+        ];
+
+        return view('admin.transaction.show-all', compact('transactions', 'chart', 'filters'));
     }
 
     public function index()
