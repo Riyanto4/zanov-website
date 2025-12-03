@@ -6,7 +6,7 @@
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Order History</h1>
-            <p class="text-gray-300">Track and view your past orders</p>
+            <p class="text-accent">Track and view your past orders</p>
         </div>
 
         @if($transactions->count() > 0)
@@ -24,7 +24,7 @@
                 <!-- Transactions List -->
                 <div class="divide-y divide-gray-800">
                     @foreach($transactions as $transaction)
-                        <div class="grid grid-cols-12 gap-4 p-6 items-center hover:bg-gray-900 transition duration-300">
+                        <div class="grid grid-cols-12 gap-4 p-6 items-center transition duration-300">
                             <!-- Order Info -->
                             <div class="col-span-3">
                                 <div class="flex items-center space-x-3">
@@ -33,15 +33,15 @@
                                     </div>
                                     <div>
                                         <p class="font-bold text-accent">{{ $transaction->reference_no }}</p>
-                                        <p class="text-gray-400 text-sm">{{ $transaction->items->count() }} items</p>
+                                        <p class="text-accent text-sm">{{ $transaction->items->count() }} items</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Date -->
                             <div class="col-span-2">
-                                <p class="text-gray-300">{{ $transaction->created_at->format('M d, Y') }}</p>
-                                <p class="text-gray-400 text-sm">{{ $transaction->created_at->format('H:i') }}</p>
+                                <p class="text-accent">{{ $transaction->created_at->format('M d, Y') }}</p>
+                                <p class="text-accent text-sm">{{ $transaction->created_at->format('H:i') }}</p>
                             </div>
 
                             <!-- Payment Method -->
@@ -74,7 +74,7 @@
                             <!-- Action -->
                             <div class="col-span-1 text-center">
                                 <a href="{{ route('transactions.show', $transaction->id) }}" 
-                                   class="inline-flex items-center text-accent hover:text-gray-300 transition duration-300"
+                                   class="inline-flex items-center text-accent transition duration-300"
                                    title="View Order Details">
                                     <i data-feather="eye" class="w-5 h-5"></i>
                                 </a>
@@ -94,10 +94,10 @@
             <!-- Empty State -->
             <div class="text-center py-20">
                 <i data-feather="shopping-bag" class="w-24 h-24 text-gray-600 mx-auto mb-6"></i>
-                <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">No Orders Yet</h3>
+                <h3 class="text-3xl font-bold text-accent mb-4 uppercase">No Orders Yet</h3>
                 <p class="text-gray-500 text-lg mb-8">You haven't placed any orders yet</p>
                 <a href="{{ route('catalogue') }}" 
-                   class="border border-accent text-accent px-8 py-3 uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
+                   class="border border-accent text-accent px-8 py-3 uppercase tracking-wider transition duration-300">
                     Start Shopping
                 </a>
             </div>

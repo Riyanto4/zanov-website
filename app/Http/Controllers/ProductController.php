@@ -9,22 +9,80 @@ use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil produk dengan stock <= 5 terlebih dahulu
-        $lowStockProducts = Product::where('stock', '<=', 5)
+        // Build query
+        $query = Product::query();
+        
+        // Search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('code', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        
+        // Gender filter
+        if ($request->filled('gender')) {
+            $query->where('gender', $request->gender);
+        }
+        
+        // Status filter
+        if ($request->filled('status')) {
+            if ($request->status == 'active') {
+                $query->where('is_active', 1);
+            } elseif ($request->status == 'inactive') {
+                $query->where('is_active', 0);
+            }
+        }
+        
+        // Stock filter
+        if ($request->filled('stock')) {
+            switch ($request->stock) {
+                case 'low':
+                    $query->where('stock', '<=', 5)->where('stock', '>', 0);
+                    break;
+                case 'out':
+                    $query->where('stock', 0);
+                    break;
+                case 'available':
+                    $query->where('stock', '>', 0);
+                    break;
+            }
+        }
+        
+        // Get products with low stock first, then others
+        $lowStockProducts = (clone $query)->where('stock', '<=', 5)
             ->orderBy('stock', 'asc')
             ->get();
         
-        // Ambil produk dengan stock > 5
-        $normalStockProducts = Product::where('stock', '>', 5)
-            ->latest()
+        $normalStockProducts = (clone $query)->where('stock', '>', 5)
+            ->orderBy('created_at', 'desc')
             ->get();
         
-        // Gabungkan koleksi
+        // Merge collections
         $products = $lowStockProducts->merge($normalStockProducts);
         
-        return view('admin.product.index', compact('products'));
+        // Paginate manually for merged collection
+        $page = $request->get('page', 1);
+        $perPage = 15;
+        $paginatedProducts = new \Illuminate\Pagination\LengthAwarePaginator(
+            $products->forPage($page, $perPage),
+            $products->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+        
+        // Get low stock count for warning
+        $lowStockCount = Product::where('stock', '<=', 5)->count();
+        
+        return view('admin.product.index', [
+            'products' => $paginatedProducts,
+            'lowStockCount' => $lowStockCount
+        ]);
     }
 
     public function create()

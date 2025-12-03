@@ -14,9 +14,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#000000',
+                        primary: '#ffffff',
                         secondary: '#1a1a1a',
-                        accent: '#ffffff',
+                        accent: '#1a1a1a',
                     }
                 }
             }

@@ -38,6 +38,80 @@
         </div>
     @endif
 
+    <!-- Filter Section -->
+    <div class="bg-white p-6 rounded-lg shadow mb-6">
+        <form method="GET" action="{{ route('products.index') }}" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Search by Name/Code -->
+                <div>
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                    <input type="text" 
+                           name="search" 
+                           id="search" 
+                           value="{{ request('search') }}"
+                           placeholder="Name, Code, or Description"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Gender Filter -->
+                <div>
+                    <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                    <select name="gender" 
+                            id="gender"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Genders</option>
+                        <option value="MALE" {{ request('gender') == 'MALE' ? 'selected' : '' }}>Male</option>
+                        <option value="FEMALE" {{ request('gender') == 'FEMALE' ? 'selected' : '' }}>Female</option>
+                        <option value="UNISEX" {{ request('gender') == 'UNISEX' ? 'selected' : '' }}>Unisex</option>
+                    </select>
+                </div>
+
+                <!-- Status Filter -->
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select name="status" 
+                            id="status"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Status</option>
+                        <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
+
+                <!-- Stock Filter -->
+                <div>
+                    <label for="stock" class="block text-sm font-medium text-gray-700 mb-1">Stock Status</label>
+                    <select name="stock" 
+                            id="stock"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Stock</option>
+                        <option value="low" {{ request('stock') == 'low' ? 'selected' : '' }}>Low Stock (≤ 5)</option>
+                        <option value="out" {{ request('stock') == 'out' ? 'selected' : '' }}>Out of Stock</option>
+                        <option value="available" {{ request('stock') == 'available' ? 'selected' : '' }}>Available</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filter Actions -->
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-600">
+                    Showing {{ $products->count() }} of {{ $products->total() }} products
+                </div>
+                <div class="flex space-x-2">
+                    <button type="submit" 
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Apply Filters
+                    </button>
+                    <a href="{{ route('products.index') }}" 
+                       class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+                        Clear Filters
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Products Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -125,12 +199,24 @@
                         <tr>
                             <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">
                                 No products found.
+                                @if(request()->hasAny(['search', 'gender', 'status', 'stock']))
+                                    <a href="{{ route('products.index') }}" class="text-blue-600 hover:text-blue-800 ml-1">
+                                        Clear filters
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+        
+        <!-- Pagination -->
+        @if($products->hasPages())
+            <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                {{ $products->withQueryString()->links() }}
+            </div>
+        @endif
     </div>
 </div>
 @endsection

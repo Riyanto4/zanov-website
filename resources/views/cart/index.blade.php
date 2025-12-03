@@ -1,12 +1,12 @@
 @extends('layouts.guest.main')
 
 @section('content')
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
     <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Shopping Cart</h1>
-            <p class="text-gray-300">Review your items and proceed to checkout</p>
+            <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight text-accent">Shopping Cart</h1>
+            <p class="text-accent">Review your items and proceed to checkout</p>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8">

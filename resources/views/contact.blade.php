@@ -3,7 +3,7 @@
 @section('content')
 <!-- Hero Section -->
 <section class="relative h-64 flex items-center justify-center overflow-hidden bg-primary">
-    <div class="absolute inset-0 bg-black/30 z-10"></div>
+    <div class="absolute inset-0 bg-white z-10"></div>
     <div class="relative z-20 text-center px-4">
         <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Hubungi Kami</h1>
         <p class="text-lg md:text-xl">Kami siap membantu Anda</p>
@@ -11,9 +11,9 @@
 </section>
 
 <!-- Contact Information -->
-<section class="py-20 bg-secondary">
+<section class="py-20 bg-accent">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="grid text-white grid-cols-1 lg:grid-cols-2 gap-12">
             <!-- Contact Info -->
             <div>
                 <h2 class="text-3xl font-bold mb-6 uppercase">Informasi Kontak</h2>

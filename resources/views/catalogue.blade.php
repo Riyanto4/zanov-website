@@ -3,18 +3,18 @@
 @section('content')
 
 <!-- Catalogue Section -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
     <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-16">
             <h1 class="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight">Product Catalogue</h1>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+            <p class="text-xl text-accent max-w-2xl mx-auto">
                 Discover our premium collection of footwear crafted for excellence
             </p>
         </div>
 
         <!-- Search and Filter Section -->
-        <div class="bg-primary border border-gray-800 rounded-none p-6 mb-12">
+        <div class="bg-accent border border-gray-800 rounded-none p-6 mb-12">
             <div class="flex flex-col md:flex-row gap-6 justify-between items-center">
                 <!-- Search Bar -->
                 <div class="flex-1 w-full md:w-auto">
@@ -24,7 +24,7 @@
                                    name="search" 
                                    value="{{ request('search') }}"
                                    placeholder="Search products by name, code, or description..." 
-                                   class="w-full bg-gray-900 border border-gray-700 text-accent placeholder-gray-500 rounded-none px-4 py-3 pl-12 focus:outline-none focus:border-accent transition duration-300">
+                                   class="w-full bg-white border border-gray-700 text-accent placeholder-gray-500 rounded-none px-4 py-3 pl-12 focus:outline-none focus:border-accent transition duration-300">
                             <div class="absolute left-4 top-3.5">
                                 <i data-feather="search" class="w-5 h-5 text-gray-500"></i>
                             </div>
@@ -40,14 +40,14 @@
 
                 <!-- Gender Filter -->
                 <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <span class="text-gray-300 font-medium">Filter by:</span>
+                    <span class="text-white font-medium">Filter by:</span>
                     <div class="flex gap-2">
                         <form method="GET" action="{{ route('catalogue') }}" id="genderFilterForm">
                             <input type="hidden" name="search" value="{{ request('search') }}">
                             <div class="flex flex-wrap gap-2">
                                 <button type="submit" name="gender" value="all"
-                                        class="px-4 py-2 border text-sm font-semibold uppercase tracking-wide transition duration-300
-                                               {{ (request('gender') == 'all' || !request('gender')) ? 'bg-accent text-primary border-accent' : 'border-gray-700 text-gray-300 hover:border-gray-600 hover:text-accent' }}">
+                                        class="px-4 py-2 text-white border text-sm font-semibold uppercase tracking-wide transition duration-300
+                                               {{ (request('gender') == 'all' || !request('gender')) ? 'bg-accent text-primary border-accent' : 'border-gray-700 text-accent hover:border-gray-600 hover:text-primary' }}">
                                     All Products
                                 </button>
                                 <button type="submit" name="gender" value="MALE"
@@ -75,23 +75,23 @@
             @if(request('search') || request('gender'))
             <div class="mt-6 pt-6 border-t border-gray-800">
                 <div class="flex flex-wrap items-center gap-3">
-                    <span class="text-gray-400">Active filters:</span>
+                    <span class="text-white">Active filters:</span>
                     
                     @if(request('search'))
-                    <div class="flex items-center gap-2 bg-gray-900 border border-gray-700 px-3 py-1.5">
-                        <span class="text-sm text-gray-300">Search: "{{ request('search') }}"</span>
+                    <div class="flex items-center text-white gap-2 bg-gray-900 border border-gray-700 px-3 py-1.5">
+                        <span class="text-sm text-white">Search: "{{ request('search') }}"</span>
                         <a href="{{ route('catalogue', array_merge(request()->except('search'), ['gender' => request('gender')])) }}" 
-                           class="text-gray-500 hover:text-accent transition duration-300">
+                           class="text-gray-500 hover:text-white transition duration-300">
                             <i data-feather="x" class="w-4 h-4"></i>
                         </a>
                     </div>
                     @endif
                     
                     @if(request('gender') && request('gender') != 'all')
-                    <div class="flex items-center gap-2 bg-gray-900 border border-gray-700 px-3 py-1.5">
-                        <span class="text-sm text-gray-300">Gender: {{ ucfirst(strtolower(request('gender'))) }}</span>
+                    <div class="flex items-center text-white gap-2 bg-gray-900 border border-gray-700 px-3 py-1.5">
+                        <span class="text-sm text-white">Gender: {{ ucfirst(strtolower(request('gender'))) }}</span>
                         <a href="{{ route('catalogue', array_merge(request()->except('gender'))) }}" 
-                           class="text-gray-500 hover:text-accent transition duration-300">
+                           class="text-gray-500 hover:text-white transition duration-300">
                             <i data-feather="x" class="w-4 h-4"></i>
                         </a>
                     </div>
@@ -99,7 +99,7 @@
                     
                     @if(request('search') || (request('gender') && request('gender') != 'all'))
                     <a href="{{ route('catalogue') }}" 
-                       class="text-sm text-accent hover:text-gray-300 transition duration-300 flex items-center gap-1 ml-2">
+                       class="text-sm text-white hover:text-accent transition duration-300 flex items-center gap-1 ml-2">
                         <i data-feather="trash-2" class="w-4 h-4"></i>
                         Clear all filters
                     </a>
@@ -111,7 +111,7 @@
 
         <!-- Products Count -->
         <div class="mb-8">
-            <p class="text-gray-400">
+            <p class="text-accent">
                 Showing <span class="font-bold text-accent">{{ $products->total() }}</span> products
                 @if(request('search'))
                 for "<span class="font-bold text-accent">{{ request('search') }}</span>"
@@ -175,7 +175,7 @@
                             <span class="text-2xl font-bold text-accent">{{ $product->price }}</span>
                         </div>
                         
-                        <p class="text-sm text-gray-400 mb-2 uppercase tracking-wide">Code: {{ $product->code }}</p>
+                        <p class="text-sm text-accent mb-2 uppercase tracking-wide">Code: {{ $product->code }}</p>
                         
                         <!-- Rating Display -->
                         <div class="flex items-center mb-4">
@@ -201,7 +201,7 @@
                             </div>
                             
                             <!-- Rating Text -->
-                            <span class="text-sm text-gray-400">
+                            <span class="text-sm text-accent">
                                 @if($ratingCount > 0)
                                     <span class="font-semibold text-white">{{ number_format($averageRating, 1) }}</span>
                                     <span class="text-gray-500 ml-1">({{ $ratingCount }} {{ Str::plural('review', $ratingCount) }})</span>
@@ -211,16 +211,18 @@
                             </span>
                         </div>
                         
-                        <p class="text-gray-300 mb-6 line-clamp-2 leading-relaxed">
+                        <p class="text-accent mb-6 line-clamp-2 leading-relaxed">
                             {{ Str::limit($product->description, 120) }}
                         </p>
                         
                         <div class="flex justify-between items-center pt-4 border-t border-gray-800">
-                            <span class="text-sm text-gray-400 uppercase tracking-wide">
-                                Stock: <span class="font-semibold {{ $product->stock > 0 ? 'text-green-400' : 'text-red-400' }}">
+                           <span class="text-sm text-primary uppercase tracking-wide border bg-accent border-black px-6 py-2 inline-block">
+                                Stock:
+                                <span class="font-semibold {{ $product->stock > 0 ? 'text-green-400' : 'text-red-400' }}">
                                     {{ $product->stock }}
                                 </span>
                             </span>
+
                             
                             <!-- Add to Cart Button -->
                             <form action="{{ route('cart.store') }}" method="POST" class="flex-shrink-0">
@@ -228,7 +230,7 @@
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <button type="submit" 
                                         class="flex items-center space-x-2 bg-accent text-primary px-6 py-2 font-bold uppercase tracking-wider text-sm hover:bg-gray-200 transition duration-300 border border-accent
-                                            {{ $product->stock <= 0 ? 'opacity-50 cursor-not-allowed bg-gray-500 text-gray-300 border-gray-500' : '' }}"
+                                            {{ $product->stock <= 0 ? 'opacity-50 cursor-not-allowed bg-gray-500 text-accent border-gray-500' : '' }}"
                                         {{ $product->stock <= 0 ? 'disabled' : '' }}>
                                     <i data-feather="shopping-cart" class="w-4 h-4"></i>
                                     <span>{{ $product->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}</span>
@@ -240,7 +242,7 @@
             @empty
                 <div class="col-span-3 text-center py-20">
                     <i data-feather="package" class="w-24 h-24 text-gray-600 mx-auto mb-6"></i>
-                    <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">No Products Found</h3>
+                    <h3 class="text-3xl font-bold text-accent mb-4 uppercase">No Products Found</h3>
                     <p class="text-gray-500 text-lg">
                         @if(request('search'))
                             No products found for "{{ request('search') }}"

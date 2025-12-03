@@ -7,7 +7,7 @@
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight text-accent">Order Details</h1>
-            <p class="text-gray-300">Reference: {{ $transaction->reference_no }}</p>
+            <p class="text-accent">Reference: {{ $transaction->reference_no }}</p>
         </div>
 
         <div class="space-y-6">
@@ -19,19 +19,19 @@
                         <h2 class="text-2xl font-bold text-accent mb-4">Order Information</h2>
                         <div class="space-y-3">
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Reference No:</span>
+                                <span class="text-accent">Reference No:</span>
                                 <span class="text-accent font-bold">{{ $transaction->reference_no }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Order Date:</span>
+                                <span class="text-accent">Order Date:</span>
                                 <span class="text-accent">{{ $transaction->created_at->format('M d, Y H:i') }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Payment Method:</span>
+                                <span class="text-accent">Payment Method:</span>
                                 <span class="text-accent">{{ $transaction->payment_method }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Status:</span>
+                                <span class="text-accent">Status:</span>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                     {{ $transaction->payment_status === 'PAID' ? 'bg-green-100 text-green-800' : '' }}
                                     {{ $transaction->payment_status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : '' }}
@@ -48,16 +48,16 @@
                         <h2 class="text-2xl font-bold text-accent mb-4">Customer Information</h2>
                         <div class="space-y-3">
                             <div>
-                                <span class="text-gray-300">Name:</span>
+                                <span class="text-accent">Name:</span>
                                 <p class="text-accent">{{ $transaction->name }}</p>
                             </div>
                             <div>
-                                <span class="text-gray-300">Address:</span>
+                                <span class="text-accent">Address:</span>
                                 <p class="text-accent">{{ $transaction->address }}</p>
                             </div>
                             @if($transaction->notes)
                             <div>
-                                <span class="text-gray-300">Notes:</span>
+                                <span class="text-accent">Notes:</span>
                                 <p class="text-accent">{{ $transaction->notes }}</p>
                             </div>
                             @endif
@@ -167,15 +167,15 @@
                 <!-- Order Total -->
                 <div class="p-6 border-t border-gray-800">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-gray-300">Subtotal:</span>
+                        <span class="text-accent">Subtotal:</span>
                         <span class="text-accent">Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-gray-300">Shipping:</span>
+                        <span class="text-accent">Shipping:</span>
                         <span class="text-accent">Included</span>
                     </div>
                     <div class="flex justify-between items-center pt-4 border-t border-gray-800">
-                        <span class="text-xl text-gray-300 font-bold">Total Amount:</span>
+                        <span class="text-xl text-accent font-bold">Total Amount:</span>
                         <span class="text-3xl font-bold text-accent">Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</span>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center p-4">
     <div class="max-w-4xl max-h-full">
         <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain">
-        <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 transition duration-300">
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:text-accent transition duration-300">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>

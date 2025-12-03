@@ -52,13 +52,13 @@
                                 <!-- Dropdown Menu -->
                                 <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-secondary rounded-md shadow-lg py-1 z-10 border border-gray-700">
                                     <div class="px-4 py-2 text-xs text-gray-400 border-b border-gray-700">
-                                        Masuk sebagai <span class="font-medium text-accent">{{ auth()->user()->name }}</span>
+                                        Masuk sebagai <span class="font-medium text-white">{{ auth()->user()->name }}</span>
                                     </div>
-                                    <a href="/transactions" class="flex items-center px-4 py-2 text-sm text-accent hover:bg-gray-800 transition duration-300">
+                                    <a href="/transactions" class="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-800 transition duration-300">
                                         <i data-feather="shopping-bag" class="w-4 h-4 mr-2"></i>
                                         Riwayat Pesanan
                                     </a>
-                                    <a href="{{ route('profile.edit.page') }}" class="flex items-center px-4 py-2 text-sm text-accent hover:bg-gray-800 transition duration-300">
+                                    <a href="{{ route('profile.edit.page') }}" class="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-800 transition duration-300">
                                         <i data-feather="settings" class="w-4 h-4 mr-2"></i>
                                         Pengaturan
                                     </a>
@@ -75,7 +75,7 @@
                         @else
                             <!-- Jika belum login -->
                             <div class="flex items-center space-x-2">
-                                <a href="{{ route('login') }}" class="border border-accent text-accent px-4 py-2 hover:bg-accent hover:text-primary transition duration-300 uppercase text-sm tracking-wider">
+                                <a href="{{ route('login') }}" class="border border-accent text-white px-4 py-2 hover:bg-accent hover:text-primary transition duration-300 uppercase text-sm tracking-wider">
                                     Login
                                 </a>
                             </div>
@@ -83,7 +83,7 @@
                     </div>
 
                     <!-- Mobile menu button -->
-                    <button class="md:hidden p-2 text-accent">
+                    <button class="md:hidden p-2 text-white">
                         <i data-feather="menu"></i>
                     </button>
                 </div>

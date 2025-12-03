@@ -3,7 +3,7 @@
     <h3 class="text-lg font-medium text-accent mb-4">Rate this Product</h3>
     
     @if($existingRating)
-        <div class="mb-4 p-3 bg-gray-900 border border-gray-700">
+        <div class="mb-4 p-3 bg-white border border-gray-700">
             <div class="flex items-center mb-2">
                 <div class="flex">
                     @for($i = 1; $i <= 5; $i++)
@@ -12,12 +12,12 @@
                         </span>
                     @endfor
                 </div>
-                <span class="ml-2 text-sm text-gray-400">
+                <span class="ml-2 text-sm text-accent">
                     You rated {{ $existingRating->rating }} stars
                 </span>
             </div>
             @if($existingRating->comment)
-                <p class="text-gray-300 text-sm">"{{ $existingRating->comment }}"</p>
+                <p class="text-accent text-sm">"{{ $existingRating->comment }}"</p>
             @endif
         </div>
     @else
@@ -38,18 +38,18 @@
                         ★
                     </label>
                 @endfor
-                <span class="ml-2 text-sm text-gray-400">
+                <span class="ml-2 text-sm text-accent">
                     (Select your rating)
                 </span>
             </div>
             
             <!-- Comment -->
             <div>
-                <label for="comment-{{ $product->id }}" class="block text-sm font-medium text-gray-400 mb-1">
+                <label for="comment-{{ $product->id }}" class="block text-sm font-medium text-accent mb-1">
                     Your Review (Optional)
                 </label>
                 <textarea id="comment-{{ $product->id }}" name="comment" rows="3"
-                          class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-none text-gray-300 focus:ring-2 focus:ring-accent focus:border-accent placeholder-gray-500"
+                          class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-none text-accent focus:ring-2 focus:ring-accent focus:border-accent placeholder-gray-500"
                           placeholder="Share your experience with this product...">{{ old('comment') }}</textarea>
             </div>
             

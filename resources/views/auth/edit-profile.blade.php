@@ -12,9 +12,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#000000',
+                        primary: '#ffffff',
                         secondary: '#1a1a1a',
-                        accent: '#ffffff',
+                        accent: '#1a1a1a',
                     }
                 }
             }
@@ -47,12 +47,12 @@
     @include('layouts.guest.navbar')
 
     <!-- Edit Profile Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-primary min-h-screen">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="mb-12">
                 <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Edit Profile</h1>
-                <p class="text-gray-300">
+                <p class="text-accent">
                     Kelola informasi profil dan keamanan akun Anda
                 </p>
             </div>
@@ -73,13 +73,13 @@
                     <div class="bg-primary border border-gray-800 p-6">
                         <h2 class="text-xl font-bold mb-6 uppercase tracking-wide">Menu</h2>
                         <nav class="space-y-2">
-                            <a href="#profile-info" class="block px-4 py-3 hover:bg-gray-900 transition duration-300 uppercase text-sm tracking-wide">
+                            <a href="#profile-info" class="block px-4 py-3 uppercase text-sm tracking-wide">
                                 Informasi Profil
                             </a>
-                            <a href="#change-password" class="block px-4 py-3 hover:bg-gray-900 transition duration-300 uppercase text-sm tracking-wide">
+                            <a href="#change-password" class="block px-4 py-3 uppercase text-sm tracking-wide">
                                 Ubah Password
                             </a>
-                            <a href="#profile-photo" class="block px-4 py-3 hover:bg-gray-900 transition duration-300 uppercase text-sm tracking-wide">
+                            <a href="#profile-photo" class="block px-4 py-3 uppercase text-sm tracking-wide">
                                 Foto Profil
                             </a>
                         </nav>
@@ -90,7 +90,7 @@
                 <div class="lg:col-span-2 space-y-8">
                     
                     <!-- Profile Information Form -->
-                    <div id="profile-info" class="bg-primary border border-gray-800 p-8">
+                    <div id="profile-info" class="bg-primary border border-accent p-8">
                         <h2 class="text-2xl font-bold mb-6 uppercase tracking-wide">Informasi Profil</h2>
                         
                         <form method="POST" action="{{ route('profile.info.update') }}">
@@ -105,7 +105,7 @@
                                        name="name" 
                                        value="{{ old('name', $user->name) }}"
                                        required 
-                                       class="input-field w-full px-4 py-3 text-primary">
+                                       class="input-field w-full px-4 py-3 text-accent">
                                 @error('name')
                                     <div class="mt-2 text-sm text-red-400">{{ $message }}</div>
                                 @enderror
@@ -119,7 +119,7 @@
                                        name="email" 
                                        value="{{ old('email', $user->email) }}"
                                        required 
-                                       class="input-field w-full px-4 py-3 text-primary">
+                                       class="input-field w-full px-4 py-3 text-accent">
                                 @error('email')
                                     <div class="mt-2 text-sm text-red-400">{{ $message }}</div>
                                 @enderror
@@ -133,7 +133,7 @@
                                        name="phone" 
                                        value="{{ old('phone', $user->phone) }}"
                                        required 
-                                       class="input-field w-full px-4 py-3 text-primary">
+                                       class="input-field w-full px-4 py-3 text-accent">
                                 @error('phone')
                                     <div class="mt-2 text-sm text-red-400">{{ $message }}</div>
                                 @enderror
@@ -164,7 +164,7 @@
                                        type="password" 
                                        name="current_password" 
                                        required 
-                                       class="input-field w-full px-4 py-3 text-primary">
+                                       class="input-field w-full px-4 py-3 text-accent">
                                 @error('current_password')
                                     <div class="mt-2 text-sm text-red-400">{{ $message }}</div>
                                 @enderror
@@ -177,7 +177,7 @@
                                        type="password" 
                                        name="password" 
                                        required 
-                                       class="input-field w-full px-4 py-3 text-primary">
+                                       class="input-field w-full px-4 py-3 text-accent">
                                 @error('password')
                                     <div class="mt-2 text-sm text-red-400">{{ $message }}</div>
                                 @enderror
@@ -190,7 +190,7 @@
                                        type="password" 
                                        name="password_confirmation" 
                                        required 
-                                       class="input-field w-full px-4 py-3 text-primary">
+                                       class="input-field w-full px-4 py-3 text-accent">
                             </div>
 
                             <!-- Submit Button -->
