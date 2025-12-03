@@ -75,7 +75,7 @@
                         @else
                             <!-- Jika belum login -->
                             <div class="flex items-center space-x-2">
-                                <a href="{{ route('login') }}" class="border border-accent text-white px-4 py-2 hover:bg-accent hover:text-primary transition duration-300 uppercase text-sm tracking-wider">
+                                <a href="{{ route('login') }}" class="border border-accent text-accent px-4 py-2 hover:bg-accent hover:text-primary transition duration-300 uppercase text-sm tracking-wider">
                                     Login
                                 </a>
                             </div>

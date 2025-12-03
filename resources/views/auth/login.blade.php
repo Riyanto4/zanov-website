@@ -97,24 +97,9 @@
                     @endif
                 </div>
 
-                <!-- Remember Me -->
-                <div class="flex items-center mb-6">
-                    <input id="remember_me" 
-                           type="checkbox" 
-                           name="remember"
-                           class="checkbox rounded border-gray-700 bg-primary text-accent focus:ring-accent">
-                    <label for="remember_me" class="ms-2 text-sm text-gray-300">
-                        Remember me
-                    </label>
-                </div>
 
                 <!-- Submit Button -->
                 <div class="flex items-center justify-between">
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="text-sm text-gray-400 hover:text-accent transition duration-300 underline">
-                            Forgot your password?
-                        </a>
-                    @endif
                     
                     <button type="submit" 
                             id="loginButton"
