@@ -11,7 +11,19 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->get();
+        // Ambil produk dengan stock <= 5 terlebih dahulu
+        $lowStockProducts = Product::where('stock', '<=', 5)
+            ->orderBy('stock', 'asc')
+            ->get();
+        
+        // Ambil produk dengan stock > 5
+        $normalStockProducts = Product::where('stock', '>', 5)
+            ->latest()
+            ->get();
+        
+        // Gabungkan koleksi
+        $products = $lowStockProducts->merge($normalStockProducts);
+        
         return view('admin.product.index', compact('products'));
     }
 
@@ -101,11 +113,28 @@ class ProductController extends Controller
             ->with('success', 'Product deleted successfully.');
     }
 
-    public function showCatalogue()
+    public function showCatalogue(Request $request)
     {
-        $products = Product::where('is_active', true)
-            ->latest()
-            ->paginate(9);
+        $query = Product::where('is_active', true)
+            ->with(['ratings']) // Load ratings relationship
+            ->withCount('ratings'); // Count total ratings
+
+        // Search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('code', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Gender filter
+        if ($request->filled('gender') && $request->gender !== 'all') {
+            $query->where('gender', $request->gender);
+        }
+
+        $products = $query->latest()->paginate(9)->withQueryString();
 
         return view('catalogue', compact('products'));
     }

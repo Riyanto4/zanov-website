@@ -12,16 +12,44 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class TransactionController extends Controller
 {
+    protected $chart;
+    
+    // Tambahkan constructor jika belum ada
+    public function __construct(LarapexChart $chart)
+    {
+        $this->chart = $chart;
+    }
+    
     public function showAll()
     {
         $transactions = Transaction::with(['items.product', 'user', 'verifier'])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+        
+        // Data untuk pie chart
+        $statusData = Transaction::select('payment_status')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('payment_status')
+            ->get();
+        
+        // Persiapkan data untuk chart
+        $statusLabels = $statusData->pluck('payment_status')->toArray();
+        $statusCounts = $statusData->pluck('count')->toArray();
+        
+        // Buat chart
+        $chart = app(LarapexChart::class)->donutChart()
+            ->setTitle('Distribution of Transaction Status')
+            ->setSubtitle('All transactions')
+            ->addData($statusCounts)
+            ->setLabels($statusLabels)
+            ->setColors(['#22c55e', '#f97316', '#ef4444', '#6b7280', '#8b5cf6'])
+            ->setHeight(250);
 
-        return view('admin.transaction.show-all', compact('transactions'));
+        return view('admin.transaction.show-all', compact('transactions', 'chart'));
     }
 
     public function index()
@@ -125,7 +153,9 @@ class TransactionController extends Controller
             abort(403);
         }
 
-        $transaction->load('items.product');
+        $transaction->load(['items.product', 'items.product.ratings' => function($query) {
+            $query->where('user_id', auth()->id());
+        }]);
 
         return view('transaction.show', compact('transaction'));
     }

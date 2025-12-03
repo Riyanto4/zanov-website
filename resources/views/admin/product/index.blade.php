@@ -16,6 +16,28 @@
         </div>
     @endif
 
+    <!-- Low Stock Warning -->
+    @php
+        $lowStockCount = \App\Models\Product::where('stock', '<=', 5)->count();
+    @endphp
+    
+    @if($lowStockCount > 0)
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-red-700">
+                        <strong>Warning:</strong> You have {{ $lowStockCount }} product(s) with low stock (≤ 5 items)
+                    </p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -33,7 +55,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse ($products as $product)
-                        <tr>
+                        <tr class="{{ $product->stock <= 5 ? 'bg-red-50 hover:bg-red-100' : 'hover:bg-gray-50' }}">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($product->photo)
                                     <img src="{{ Storage::url($product->photo) }}" 
@@ -48,7 +70,28 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $product->code }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $product->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $product->price }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $product->stock }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm font-medium {{ $product->stock <= 5 ? 'text-red-600' : 'text-gray-900' }}">
+                                        {{ $product->stock }}
+                                    </span>
+                                    @if($product->stock <= 5)
+                                        <div class="relative group">
+                                            <svg class="h-5 w-5 text-red-500 cursor-pointer" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                            </svg>
+                                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-red-600 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10">
+                                                Low Stock Alert!
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if($product->stock == 0)
+                                        <span class="px-2 py-1 text-xs font-bold bg-red-100 text-red-800 rounded-full">
+                                            Out of Stock
+                                        </span>
+                                    @endif
+                                </div>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                     {{ $product->gender == 'MALE' ? 'bg-blue-100 text-blue-800' : 

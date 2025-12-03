@@ -24,9 +24,118 @@
         </div>
     @endif
 
+    <!-- Stats and Chart Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Total Transactions Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Total Transactions</p>
+                    <p class="mt-1 text-2xl font-semibold text-gray-900">
+                        {{ $transactions->total() }}
+                    </p>
+                </div>
+                <div class="p-3 rounded-full bg-blue-100">
+                    <i data-feather="shopping-cart" class="text-blue-600"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Transactions Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Pending Verification</p>
+                    <p class="mt-1 text-2xl font-semibold text-yellow-600">
+                        {{ \App\Models\Transaction::where('payment_status', 'PENDING')->count() }}
+                    </p>
+                </div>
+                <div class="p-3 rounded-full bg-yellow-100">
+                    <i data-feather="clock" class="text-yellow-600"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Revenue Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Total Revenue (Paid)</p>
+                    <p class="mt-1 text-2xl font-semibold text-green-600">
+                        Rp {{ number_format(\App\Models\Transaction::where('payment_status', 'PAID')->sum('total_amount'), 0, ',', '.') }}
+                    </p>
+                </div>
+                <div class="p-3 rounded-full bg-green-100">
+                    <i data-feather="dollar-sign" class="text-green-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Status Distribution Chart -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Transaction Status Distribution</h2>
+                <span class="text-sm text-gray-600">Real-time data</span>
+            </div>
+            <div>
+                {!! $chart->container() !!}
+            </div>
+            <div class="mt-4 text-sm text-gray-500">
+                <p>This chart shows the distribution of all transactions by their payment status.</p>
+            </div>
+        </div>
+
+        <!-- Legend and Stats -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Status Breakdown</h2>
+            <div class="space-y-4">
+                @php
+                    $statuses = [
+                        'PAID' => ['color' => 'bg-green-100 text-green-800', 'icon' => 'check-circle'],
+                        'PENDING' => ['color' => 'bg-yellow-100 text-yellow-800', 'icon' => 'clock'],
+                        'CANCELED' => ['color' => 'bg-red-100 text-red-800', 'icon' => 'x-circle'],
+                        'REFUNDED' => ['color' => 'bg-gray-100 text-gray-800', 'icon' => 'alert-circle'],
+                    ];
+                    
+                    foreach($statuses as $status => $style):
+                        $count = \App\Models\Transaction::where('payment_status', $status)->count();
+                        $percentage = $transactions->total() > 0 ? round(($count / $transactions->total()) * 100, 1) : 0;
+                @endphp
+                <div class="flex items-center justify-between p-3 rounded-lg {{ $style['color'] }}">
+                    <div class="flex items-center">
+                        <i data-feather="{{ $style['icon'] }}" class="w-5 h-5 mr-3"></i>
+                        <span class="font-medium">{{ $status }}</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold">{{ $count }}</div>
+                        <div class="text-sm opacity-75">{{ $percentage }}%</div>
+                    </div>
+                </div>
+                @php endforeach; @endphp
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="text-sm text-gray-600">
+                    <p><strong>Note:</strong></p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><span class="text-yellow-600">PENDING</span> transactions require verification</li>
+                        <li><span class="text-green-600">PAID</span> transactions are completed</li>
+                        <li><span class="text-red-600">CANCELED</span> transactions have been canceled</li>
+                        <li>Click "Verify" to approve pending transactions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
+                <!-- Table header and body tetap sama seperti sebelumnya -->
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference No</th>
@@ -42,6 +151,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse ($transactions as $transaction)
                         <tr class="hover:bg-gray-50">
+                            <!-- Table rows tetap sama seperti sebelumnya -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {{ $transaction->reference_no }}
                             </td>
@@ -137,4 +247,25 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <!-- Include ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    {!! $chart->script() !!}
+    
+    <!-- Initialize Feather Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+            
+            // Add tooltips for status badges
+            const statusBadges = document.querySelectorAll('[class*="bg-"]');
+            statusBadges.forEach(badge => {
+                badge.setAttribute('title', 'Payment Status');
+            });
+        });
+    </script>
+@endpush
 @endsection
