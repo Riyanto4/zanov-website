@@ -44,7 +44,7 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="button" onclick="decreaseQuantity({{ $item->id }})" 
-                                                    class="w-8 h-8 border border-gray-600 flex items-center justify-center hover:border-accent transition duration-300">
+                                                    class="w-8 h-8 border border-gray-600 flex items-center justify-center transition duration-300">
                                                 <i data-feather="minus" class="w-4 h-4"></i>
                                             </button>
                                             <input type="number" 
@@ -56,7 +56,7 @@
                                                    class="w-16 mx-2 px-2 py-1 border border-gray-600 bg-primary text-accent text-center"
                                                    onchange="updateQuantity({{ $item->id }})">
                                             <button type="button" onclick="increaseQuantity({{ $item->id }})"
-                                                    class="w-8 h-8 border border-gray-600 flex items-center justify-center hover:border-accent transition duration-300">
+                                                    class="w-8 h-8 border border-gray-600 flex items-center justify-center transition duration-300">
                                                 <i data-feather="plus" class="w-4 h-4"></i>
                                             </button>
                                         </form>
@@ -89,11 +89,11 @@
                             
                             <div class="flex justify-between space-x-4">
                                 <a href="{{ route('catalogue') }}" 
-                                   class="flex-1 border border-accent text-accent px-6 py-3 text-center uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
+                                   class="flex-1 border border-accent text-accent px-6 py-3 text-center uppercase tracking-wider transition duration-300">
                                     Continue Shopping
                                 </a>
                                 <a href="{{ route('checkout') }}" 
-                                class="flex-1 bg-accent text-primary px-6 py-3 uppercase tracking-wider font-bold hover:bg-gray-200 transition duration-300 text-center">
+                                class="flex-1 bg-accent text-primary px-6 py-3 uppercase tracking-wider font-bold transition duration-300 text-center">
                                     Proceed to Checkout
                                 </a>
                             </div>
@@ -106,33 +106,45 @@
                         <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">Your Cart is Empty</h3>
                         <p class="text-gray-500 text-lg mb-8">Start adding some products to your cart</p>
                         <a href="{{ route('catalogue') }}" 
-                           class="border border-accent text-accent px-8 py-3 uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
+                           class="border border-accent text-accent px-8 py-3 uppercase tracking-wider transition duration-300">
                             Browse Products
                         </a>
                     </div>
                 @endif
             </div>
 
-            <!-- Best Selling Products Sidebar -->
-            @if($bestSellingProducts->count() > 0)
+            <!-- Recommended Products Sidebar -->
+            @if($recommendedProducts->count() > 0)
             <div class="lg:w-80">
                 <div class="bg-primary border border-gray-800 p-6 sticky top-4">
                     <!-- Header -->
                     <div class="text-center mb-6">
                         <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-3">
-                            <i data-feather="award" class="w-6 h-6 text-primary"></i>
+                            <i data-feather="zap" class="w-6 h-6 text-primary"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-accent uppercase tracking-tight">Produk Terlaris</h3>
-                        <p class="text-gray-400 text-sm mt-1">Most loved by our community</p>
+                        <h3 class="text-xl font-bold text-accent uppercase tracking-tight">
+                            @if($cart && $cart->items->count() > 0)
+                                Frequently Bought Together
+                            @else
+                                Popular Choices
+                            @endif
+                        </h3>
+                        <p class="text-gray-400 text-sm mt-1">
+                            @if($cart && $cart->items->count() > 0)
+                                Customers who bought items in your cart also bought
+                            @else
+                                Most popular products among our customers
+                            @endif
+                        </p>
                     </div>
 
                     <!-- Products List -->
                     <div class="space-y-4">
-                        @foreach($bestSellingProducts as $product)
-                        <div class="group border border-gray-800 hover:border-accent transition duration-300 p-4">
+                        @foreach($recommendedProducts as $product)
+                        <div class="group border border-gray-800 transition duration-300 p-4">
                             <div class="flex space-x-4">
                                 <!-- Product Image -->
-                                <div class="flex-shrink-0 w-16 h-16 bg-gray-900 border border-gray-700 group-hover:border-accent transition duration-300">
+                                <div class="flex-shrink-0 w-16 h-16 bg-gray-900 border border-gray-700 group transition duration-300">
                                     @if($product->photo)
                                         <img src="{{ Storage::url($product->photo) }}" 
                                              alt="{{ $product->name }}" 
@@ -146,7 +158,7 @@
 
                                 <!-- Product Info -->
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-accent group-hover:text-white transition duration-300 text-sm leading-tight mb-1">
+                                    <h4 class="font-bold text-accent transition duration-300 text-sm leading-tight mb-1">
                                         {{ $product->name }}
                                     </h4>
                                     <p class="text-accent font-bold text-lg">${{ number_format($product->price, 2) }}</p>
@@ -159,11 +171,13 @@
                                             <span class="text-red-400 text-xs">✗ Out of Stock</span>
                                         @endif
                                         
-                                        <!-- Popularity Indicator -->
-                                        <div class="flex items-center text-yellow-400">
-                                            <i data-feather="star" class="w-3 h-3 fill-current"></i>
-                                            <span class="text-xs ml-1">Bestseller</span>
-                                        </div>
+                                        <!-- Recommendation Indicator -->
+                                        @if($cart && $cart->items->count() > 0)
+                                            <div class="flex items-center text-purple-400">
+                                                <i data-feather="trending-up" class="w-3 h-3"></i>
+                                                <span class="text-xs ml-1">Recommended</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +188,7 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <button type="submit" 
-                                        class="w-full border border-accent text-accent text-sm py-2 uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300 flex items-center justify-center space-x-2">
+                                        class="w-full border border-accent text-accent text-sm py-2 uppercase tracking-wider transition duration-300 flex items-center justify-center space-x-2">
                                     <i data-feather="shopping-cart" class="w-4 h-4"></i>
                                     <span>Add to Cart</span>
                                 </button>
@@ -192,10 +206,16 @@
 
                     <!-- Call to Action -->
                     <div class="mt-6 pt-6 border-t border-gray-800 text-center">
-                        <p class="text-gray-400 text-sm mb-3">Join thousands of satisfied customers</p>
+                        <p class="text-gray-400 text-sm mb-3">
+                            @if($cart && $cart->items->count() > 0)
+                                Based on purchase patterns of customers with similar carts
+                            @else
+                                Join thousands of satisfied customers
+                            @endif
+                        </p>
                         <a href="{{ route('catalogue') }}" 
-                           class="inline-block border border-accent text-accent px-6 py-2 text-sm uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
-                            Explore All Bestsellers
+                           class="inline-block border border-accent text-accent px-6 py-2 text-sm uppercase tracking-wider transition duration-300">
+                            Explore All Products
                         </a>
                     </div>
                 </div>
