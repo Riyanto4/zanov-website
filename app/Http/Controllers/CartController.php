@@ -21,9 +21,9 @@ class CartController extends Controller
             ->first();
 
         // Ambil 4 produk rekomendasi berdasarkan asosiasi
-        $recommendedProducts = $this->getAssociationBasedProducts(4);
+        $bestSellingProducts = $this->getAssociationBasedProducts(4);
 
-        return view('cart.index', compact('cart', 'recommendedProducts'));
+        return view('cart.index', compact('cart', 'bestSellingProducts'));
     }
 
     // Method untuk mendapatkan produk rekomendasi berdasarkan algoritma asosiasi
