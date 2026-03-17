@@ -30,6 +30,20 @@
                 ->orderByDesc('created_at')
                 ->limit(6)
                 ->get();
+
+            $resolveProductImageUrl = function ($product) {
+                $photo = $product->photo;
+                if (!$photo) {
+                    return 'https://picsum.photos/seed/product-' . $product->id . '/600/600';
+                }
+                if (\Illuminate\Support\Str::startsWith($photo, ['http://', 'https://'])) {
+                    return $photo;
+                }
+                if (\Illuminate\Support\Str::startsWith($photo, 'storage/')) {
+                    return asset($photo);
+                }
+                return asset('storage/' . $photo);
+            };
         @endphp
 
         <h2 class="text-3xl font-bold mb-12 text-center uppercase">Produk Terlaris</h2>
@@ -37,7 +51,7 @@
             @foreach($bestSellingProducts as $product)
             <div class="group bg-white shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="relative overflow-hidden">
-                    <img src="{{ $product->photo ?? 'https://via.placeholder.com/400x400?text=No+Image' }}" 
+                    <img src="{{ $resolveProductImageUrl($product) }}" 
                          alt="{{ $product->name }}" 
                          class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition duration-300"></div>
@@ -82,7 +96,7 @@
             @foreach($latestProducts as $product)
             <div class="group bg-white shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="relative overflow-hidden">
-                    <img src="{{ $product->photo ?? 'https://via.placeholder.com/400x400?text=No+Image' }}" 
+                    <img src="{{ $resolveProductImageUrl($product) }}" 
                          alt="{{ $product->name }}" 
                          class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition duration-300"></div>
