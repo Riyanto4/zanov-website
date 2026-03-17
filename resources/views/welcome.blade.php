@@ -19,16 +19,22 @@
 <!-- Featured Products -->
 <section id="products" class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary">
     <div class="max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 text-center uppercase">Koleksi Unggulan</h2>
+        @php
+            $bestSellingProducts = \App\Models\Product::where('is_active', 1)
+                ->withSum('transactionItems as total_sold', 'quantity')
+                ->orderByDesc('total_sold')
+                ->limit(6)
+                ->get();
+
+            $latestProducts = \App\Models\Product::where('is_active', 1)
+                ->orderByDesc('created_at')
+                ->limit(6)
+                ->get();
+        @endphp
+
+        <h2 class="text-3xl font-bold mb-12 text-center uppercase">Produk Terlaris</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @php
-                $featuredProducts = \App\Models\Product::where('is_active', 1)
-                    ->inRandomOrder()
-                    ->limit(6)
-                    ->get();
-            @endphp
-            
-            @foreach($featuredProducts as $product)
+            @foreach($bestSellingProducts as $product)
             <div class="group bg-white shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="relative overflow-hidden">
                     <img src="{{ $product->photo ?? 'https://via.placeholder.com/400x400?text=No+Image' }}" 
@@ -46,12 +52,13 @@
                         <h3 class="text-xl font-semibold">{{ $product->name }}</h3>
                         <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded uppercase">
                             {{ $product->gender }}
-                    </span>
+                        </span>
                     </div>
                     <p class="text-gray-600 mb-4 line-clamp-2">{{ Str::limit($product->description, 100) }}</p>
                     <div class="flex justify-between items-center">
                         <span class="text-2xl font-bold text-accent">${{ number_format($product->price, 2) }}</span>
                         @if($product->stock > 0)
+                        <a href="/catalogue" class="bg-accent text-primary px-6 py-2 uppercase tracking-wide text-sm hover:bg-gray-200 transition duration-300">
                             Lihat Detail
                         </a>
                         @else
@@ -69,6 +76,52 @@
             </div>
             @endforeach
         </div>
+
+        <h2 class="text-3xl font-bold mt-16 mb-12 text-center uppercase">Produk Terbaru</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach($latestProducts as $product)
+            <div class="group bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="relative overflow-hidden">
+                    <img src="{{ $product->photo ?? 'https://via.placeholder.com/400x400?text=No+Image' }}" 
+                         alt="{{ $product->name }}" 
+                         class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition duration-300"></div>
+                    @if($product->stock <= 0)
+                    <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 text-sm font-bold">
+                        HABIS
+                    </div>
+                    @endif
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-semibold">{{ $product->name }}</h3>
+                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded uppercase">
+                            {{ $product->gender }}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 mb-4 line-clamp-2">{{ Str::limit($product->description, 100) }}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-accent">${{ number_format($product->price, 2) }}</span>
+                        @if($product->stock > 0)
+                        <a href="/catalogue" class="bg-accent text-primary px-6 py-2 uppercase tracking-wide text-sm hover:bg-gray-200 transition duration-300">
+                            Lihat Detail
+                        </a>
+                        @else
+                        <button disabled class="bg-gray-400 text-white px-6 py-2 uppercase tracking-wide text-sm cursor-not-allowed">
+                            Habis
+                        </button>
+                        @endif
+                    </div>
+                    @if($product->stock > 0 && $product->stock <= 5)
+                    <div class="mt-3 text-sm text-orange-500 font-medium">
+                        Hanya tersisa {{ $product->stock }} stok!
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endforeach
+        </div>
+
         <div class="text-center mt-12">
             <a href="/catalogue" class="bg-accent text-primary px-8 py-3 inline-block rounded-none uppercase font-bold tracking-wider hover:bg-gray-200 transition duration-300">
                 Lihat Semua Produk

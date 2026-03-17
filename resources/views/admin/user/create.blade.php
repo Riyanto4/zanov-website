@@ -4,10 +4,10 @@
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-bold text-gray-900">Create New User</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Buat Pengguna Baru</h1>
             <a href="{{ route('admin.users.index') }}" 
                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Back to Users
+                Kembali ke Daftar Pengguna
             </a>
         </div>
 
@@ -26,7 +26,7 @@
                 @csrf
                 <div class="p-6 space-y-6">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Name *</label>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Nama *</label>
                         <input type="text" 
                                name="name" 
                                id="name"
@@ -46,19 +46,19 @@
                     </div>
 
                     <div>
-                        <label for="role" class="block text-sm font-medium text-gray-700">Role *</label>
+                        <label for="role" class="block text-sm font-medium text-gray-700">Peran *</label>
                         <select name="role" 
                                 id="role"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 required>
-                            <option value="">Select Role</option>
+                            <option value="">Pilih Peran</option>
                             <option value="ADMIN" {{ old('role') == 'ADMIN' ? 'selected' : '' }}>ADMIN</option>
                             <option value="CUSTOMER" {{ old('role') == 'CUSTOMER' ? 'selected' : '' }}>CUSTOMER</option>
                         </select>
                     </div>
 
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password *</label>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Kata Sandi *</label>
                         <input type="password" 
                                name="password" 
                                id="password"
@@ -67,7 +67,7 @@
                     </div>
 
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password *</label>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Kata Sandi *</label>
                         <input type="password" 
                                name="password_confirmation" 
                                id="password_confirmation"
@@ -78,7 +78,7 @@
                 <div class="px-6 py-4 bg-gray-50 text-right">
                     <button type="submit" 
                             class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-                        Create User
+                        Simpan Pengguna
                     </button>
                 </div>
             </form>

@@ -3,15 +3,15 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">User Management</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Manajemen Pengguna</h1>
         <div class="flex space-x-4">
             <a href="{{ route('dashboard') }}" 
                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Back to Dashboard
+                Kembali ke Dashboard
             </a>
             <a href="{{ route('admin.users.create') }}" 
                class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-                Add New User
+                Tambah Pengguna Baru
             </a>
         </div>
     </div>
@@ -33,11 +33,11 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pengguna</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registered Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Peran</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Terdaftar</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -62,11 +62,11 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                 <a href="{{ route('admin.users.show', $user) }}" 
                                    class="text-indigo-600 hover:text-indigo-900 mr-3">
-                                    View
+                                    Lihat
                                 </a>
                                 <a href="{{ route('admin.users.edit', $user) }}" 
                                    class="text-blue-600 hover:text-blue-900 mr-3">
-                                    Edit
+                                    Ubah
                                 </a>
                                 @if($user->id !== auth()->id())
                                     <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block">
@@ -74,19 +74,19 @@
                                         @method('DELETE')
                                         <button type="submit" 
                                                 class="text-red-600 hover:text-red-900"
-                                                onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.')">
-                                            Delete
+                                                onclick="return confirm('Yakin ingin menghapus pengguna ini? Tindakan ini tidak dapat dibatalkan.')">
+                                            Hapus
                                         </button>
                                     </form>
                                 @else
-                                    <span class="text-gray-400 text-xs">Current User</span>
+                                    <span class="text-gray-400 text-xs">Pengguna Saat Ini</span>
                                 @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                No users found.
+                                Tidak ada pengguna ditemukan.
                             </td>
                         </tr>
                     @endforelse
