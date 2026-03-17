@@ -5,11 +5,22 @@
 <!-- Catalogue Section -->
 <section class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
     <div class="max-w-7xl mx-auto">
+        @php
+            $genderLabels = [
+                'MALE' => 'Pria',
+                'FEMALE' => 'Wanita',
+                'UNISEX' => 'Unisex',
+            ];
+            $activeGenderLabel = request('gender') && request('gender') !== 'all'
+                ? ($genderLabels[request('gender')] ?? request('gender'))
+                : null;
+        @endphp
+
         <!-- Header -->
         <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight">Product Catalogue</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight">Katalog Produk</h1>
             <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                Discover our premium collection of footwear crafted for excellence
+                Temukan koleksi alas kaki premium kami yang dibuat dengan standar terbaik
             </p>
         </div>
 
@@ -23,7 +34,7 @@
                             <input type="text" 
                                    name="search" 
                                    value="{{ request('search') }}"
-                                   placeholder="Search products by name, code, or description..." 
+                                   placeholder="Cari produk berdasarkan nama, kode, atau deskripsi..." 
                                    class="w-full bg-gray-900 border border-gray-700 text-accent placeholder-gray-500 rounded-none px-4 py-3 pl-12 focus:outline-none focus:border-accent transition duration-300">
                             <div class="absolute left-4 top-3.5">
                                 <i data-feather="search" class="w-5 h-5 text-gray-500"></i>
@@ -40,7 +51,7 @@
 
                 <!-- Gender Filter -->
                 <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <span class="text-gray-300 font-medium">Filter by:</span>
+                    <span class="text-gray-300 font-medium">Filter berdasarkan:</span>
                     <div class="flex gap-2">
                         <form method="GET" action="{{ route('catalogue') }}" id="genderFilterForm">
                             <input type="hidden" name="search" value="{{ request('search') }}">
@@ -48,17 +59,17 @@
                                 <button type="submit" name="gender" value="all"
                                         class="px-4 py-2 border text-sm font-semibold uppercase tracking-wide transition duration-300
                                                {{ (request('gender') == 'all' || !request('gender')) ? 'bg-accent text-primary border-accent' : 'border-gray-700 text-gray-300 hover:border-gray-600 hover:text-accent' }}">
-                                    All Products
+                                    Semua Produk
                                 </button>
                                 <button type="submit" name="gender" value="MALE"
                                         class="px-4 py-2 border border-blue-500 text-sm font-semibold uppercase tracking-wide transition duration-300
                                                {{ request('gender') == 'MALE' ? 'bg-blue-500/20 text-blue-400' : 'text-blue-500 hover:bg-blue-500/10' }}">
-                                    Men
+                                    Pria
                                 </button>
                                 <button type="submit" name="gender" value="FEMALE"
                                         class="px-4 py-2 border border-pink-500 text-sm font-semibold uppercase tracking-wide transition duration-300
                                                {{ request('gender') == 'FEMALE' ? 'bg-pink-500/20 text-pink-400' : 'text-pink-500 hover:bg-pink-500/10' }}">
-                                    Women
+                                    Wanita
                                 </button>
                                 <button type="submit" name="gender" value="UNISEX"
                                         class="px-4 py-2 border border-purple-500 text-sm font-semibold uppercase tracking-wide transition duration-300
@@ -75,11 +86,11 @@
             @if(request('search') || request('gender'))
             <div class="mt-6 pt-6 border-t border-gray-800">
                 <div class="flex flex-wrap items-center gap-3">
-                    <span class="text-gray-400">Active filters:</span>
+                    <span class="text-gray-400">Filter aktif:</span>
                     
                     @if(request('search'))
                     <div class="flex items-center gap-2 bg-gray-900 border border-gray-700 px-3 py-1.5">
-                        <span class="text-sm text-gray-300">Search: "{{ request('search') }}"</span>
+                        <span class="text-sm text-gray-300">Pencarian: "{{ request('search') }}"</span>
                         <a href="{{ route('catalogue', array_merge(request()->except('search'), ['gender' => request('gender')])) }}" 
                            class="text-gray-500 hover:text-accent transition duration-300">
                             <i data-feather="x" class="w-4 h-4"></i>
@@ -89,7 +100,7 @@
                     
                     @if(request('gender') && request('gender') != 'all')
                     <div class="flex items-center gap-2 bg-gray-900 border border-gray-700 px-3 py-1.5">
-                        <span class="text-sm text-gray-300">Gender: {{ ucfirst(strtolower(request('gender'))) }}</span>
+                        <span class="text-sm text-gray-300">Jenis Kelamin: {{ $activeGenderLabel }}</span>
                         <a href="{{ route('catalogue', array_merge(request()->except('gender'))) }}" 
                            class="text-gray-500 hover:text-accent transition duration-300">
                             <i data-feather="x" class="w-4 h-4"></i>
@@ -101,7 +112,7 @@
                     <a href="{{ route('catalogue') }}" 
                        class="text-sm text-accent hover:text-gray-300 transition duration-300 flex items-center gap-1 ml-2">
                         <i data-feather="trash-2" class="w-4 h-4"></i>
-                        Clear all filters
+                        Hapus semua filter
                     </a>
                     @endif
                 </div>
@@ -112,12 +123,12 @@
         <!-- Products Count -->
         <div class="mb-8">
             <p class="text-gray-400">
-                Showing <span class="font-bold text-accent">{{ $products->total() }}</span> products
+                Menampilkan <span class="font-bold text-accent">{{ $products->total() }}</span> produk
                 @if(request('search'))
-                for "<span class="font-bold text-accent">{{ request('search') }}</span>"
+                untuk "<span class="font-bold text-accent">{{ request('search') }}</span>"
                 @endif
                 @if(request('gender') && request('gender') != 'all')
-                in <span class="font-bold text-accent">{{ ucfirst(strtolower(request('gender'))) }}</span>
+                pada <span class="font-bold text-accent">{{ $activeGenderLabel }}</span>
                 @endif
             </p>
         </div>
@@ -148,7 +159,7 @@
                             <span class="px-3 py-1 text-xs font-semibold rounded-none border 
                                 {{ $product->gender == 'MALE' ? 'border-blue-500 text-blue-500' : 
                                    ($product->gender == 'FEMALE' ? 'border-pink-500 text-pink-500' : 'border-purple-500 text-purple-500') }}">
-                                {{ $product->gender }}
+                                {{ $genderLabels[$product->gender] ?? $product->gender }}
                             </span>
                         </div>
                         
@@ -156,14 +167,14 @@
                         <div class="absolute top-4 right-4">
                             <span class="px-3 py-1 text-xs font-semibold rounded-none border 
                                 {{ $product->stock > 0 ? 'border-green-500 text-green-500' : 'border-red-500 text-red-500' }}">
-                                {{ $product->stock > 0 ? 'IN STOCK' : 'OUT OF STOCK' }}
+                                {{ $product->stock > 0 ? 'TERSEDIA' : 'HABIS' }}
                             </span>
                         </div>
 
                         <!-- Overlay on Hover -->
                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
                             <button class="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200">
-                                Quick View
+                                Lihat Cepat
                             </button>
                         </div>
                     </div>
@@ -175,7 +186,7 @@
                             <span class="text-2xl font-bold text-accent">{{ $product->price }}</span>
                         </div>
                         
-                        <p class="text-sm text-gray-400 mb-2 uppercase tracking-wide">Code: {{ $product->code }}</p>
+                        <p class="text-sm text-gray-400 mb-2 uppercase tracking-wide">Kode: {{ $product->code }}</p>
                         
                         <!-- Rating Display -->
                         <div class="flex items-center mb-4">
@@ -204,9 +215,9 @@
                             <span class="text-sm text-gray-400">
                                 @if($ratingCount > 0)
                                     <span class="font-semibold text-white">{{ number_format($averageRating, 1) }}</span>
-                                    <span class="text-gray-500 ml-1">({{ $ratingCount }} {{ Str::plural('review', $ratingCount) }})</span>
+                                    <span class="text-gray-500 ml-1">({{ $ratingCount }} ulasan)</span>
                                 @else
-                                    <span class="text-gray-500">No ratings yet</span>
+                                    <span class="text-gray-500">Belum ada ulasan</span>
                                 @endif
                             </span>
                         </div>
@@ -217,7 +228,7 @@
                         
                         <div class="flex justify-between items-center pt-4 border-t border-gray-800">
                             <span class="text-sm text-gray-400 uppercase tracking-wide">
-                                Stock: <span class="font-semibold {{ $product->stock > 0 ? 'text-green-400' : 'text-red-400' }}">
+                                Stok: <span class="font-semibold {{ $product->stock > 0 ? 'text-green-400' : 'text-red-400' }}">
                                     {{ $product->stock }}
                                 </span>
                             </span>
@@ -231,7 +242,7 @@
                                             {{ $product->stock <= 0 ? 'opacity-50 cursor-not-allowed bg-gray-500 text-gray-300 border-gray-500' : '' }}"
                                         {{ $product->stock <= 0 ? 'disabled' : '' }}>
                                     <i data-feather="shopping-cart" class="w-4 h-4"></i>
-                                    <span>{{ $product->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}</span>
+                                    <span>{{ $product->stock > 0 ? 'Tambah ke Keranjang' : 'Stok Habis' }}</span>
                                 </button>
                             </form>
                         </div>
@@ -240,20 +251,20 @@
             @empty
                 <div class="col-span-3 text-center py-20">
                     <i data-feather="package" class="w-24 h-24 text-gray-600 mx-auto mb-6"></i>
-                    <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">No Products Found</h3>
+                    <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">Produk Tidak Ditemukan</h3>
                     <p class="text-gray-500 text-lg">
                         @if(request('search'))
-                            No products found for "{{ request('search') }}"
+                            Tidak ada produk untuk "{{ request('search') }}"
                         @elseif(request('gender') && request('gender') != 'all')
-                            No {{ strtolower(request('gender')) }} products available
+                            Tidak ada produk {{ $activeGenderLabel }}
                         @else
-                            We're currently updating our collection. Please check back later.
+                            Kami sedang memperbarui koleksi. Silakan cek kembali nanti.
                         @endif
                     </p>
                     @if(request('search') || request('gender'))
                     <a href="{{ route('catalogue') }}" 
                        class="mt-6 inline-block bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200 transition duration-300">
-                        View All Products
+                        Lihat Semua Produk
                     </a>
                     @endif
                 </div>

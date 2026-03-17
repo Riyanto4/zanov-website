@@ -34,8 +34,8 @@
                         <div>
                             <h3 class="text-xl font-bold mb-2">Alamat</h3>
                             <p class="text-white-600">
-                                Jl. Merdeka No. 123<br>
-                                Jakarta Pusat, DKI Jakarta 10110<br>
+                                Jl. Arsadimeja<br>
+                                Purwokerto Selatan, Banyumas, Jawa Tengah<br>
                                 Indonesia
                             </p>
                         </div>
@@ -51,8 +51,7 @@
                         <div>
                             <h3 class="text-xl font-bold mb-2">Telepon</h3>
                             <p class="text-white-600">
-                                +62 21 1234 5678<br>
-                                +62 812 3456 7890
+                                +62 895-3830-278438
                             </p>
                         </div>
                     </div>
@@ -67,8 +66,7 @@
                         <div>
                             <h3 class="text-xl font-bold mb-2">Email</h3>
                             <p class="text-white-600">
-                                info@zanov.com<br>
-                                support@zanov.com
+                                zanovshoes@gmail.com
                             </p>
                         </div>
                     </div>
@@ -83,8 +81,7 @@
                         <div>
                             <h3 class="text-xl font-bold mb-2">Jam Operasional</h3>
                             <p class="text-white-600">
-                                Senin - Jumat: 09:00 - 18:00<br>
-                                Sabtu: 10:00 - 16:00<br>
+                                Senin - Sabtu: 09:00 - 18:00<br>
                                 Minggu: Tutup
                             </p>
                         </div>
@@ -168,37 +165,23 @@
         <h2 class="text-3xl font-bold mb-12 text-center uppercase">Pertanyaan yang Sering Diajukan</h2>
         <div class="space-y-6">
             <div class="bg-white p-6 shadow-md">
-                <h3 class="text-xl font-bold mb-3 text-black">Berapa lama waktu pengiriman?</h3>
+                <h3 class="text-xl font-bold mb-3 text-black">Apakah ZANOV memproduksi sepatu sendiri?</h3>
                 <p class="text-gray-600">
-                    Waktu pengiriman standar adalah 3-5 hari kerja untuk wilayah Jakarta dan sekitarnya, 
-                    dan 5-7 hari kerja untuk wilayah luar Jakarta. Untuk pengiriman express, 
-                    pesanan akan tiba dalam 1-2 hari kerja.
+                    Ya, ZANOV merupakan home industry yang memproduksi sepatu sendiri sejak November 2022. Setiap produk dibuat dengan proses yang teliti untuk menjaga kualitas.
                 </p>
             </div>
 
             <div class="bg-white p-6 shadow-md">
-                <h3 class="text-xl font-bold mb-3 text-black">Apakah ada garansi untuk produk?</h3>
+                <h3 class="text-xl font-bold mb-3 text-black">Bahan apa yang digunakan untuk sepatu ZANOV?</h3>
                 <p class="text-gray-600">
-                    Ya, semua produk ZANOV dilengkapi dengan garansi 6 bulan untuk cacat produksi. 
-                    Garansi tidak mencakup kerusakan akibat pemakaian normal atau kesalahan penggunaan.
+                    Kami menggunakan bahan pilihan yang nyaman dan tahan lama, sehingga sepatu tidak hanya terlihat bagus tetapi juga nyaman dipakai dalam aktivitas sehari-hari.
                 </p>
             </div>
 
             <div class="bg-white p-6 shadow-md">
-                <h3 class="text-xl font-bold mb-3 text-black">Bagaimana cara menukar atau mengembalikan produk?</h3>
+                <h3 class="text-xl font-bold mb-3 text-black">Apakah sepatu ZANOV cocok untuk penggunaan harian?</h3>
                 <p class="text-gray-600">
-                    Anda dapat menukar atau mengembalikan produk dalam waktu 14 hari sejak tanggal pembelian, 
-                    dengan syarat produk masih dalam kondisi baru dan belum dipakai. Silakan hubungi 
-                    customer service kami untuk proses penukaran atau pengembalian.
-                </p>
-            </div>
-
-            <div class="bg-white p-6 shadow-md">
-                <h3 class="text-xl font-bold mb-3 text-black">Apakah tersedia layanan custom order?</h3>
-                <p class="text-gray-600">
-                    Ya, kami menyediakan layanan custom order untuk pemesanan dalam jumlah tertentu. 
-                    Silakan hubungi tim kami untuk informasi lebih lanjut mengenai layanan custom order 
-                    dan estimasi waktu pengerjaannya.
+                    Tentu saja. Sepatu ZANOV dirancang untuk kenyamanan dan daya tahan, sehingga sangat cocok digunakan untuk aktivitas sehari-hari tanpa mengorbankan gaya.
                 </p>
             </div>
         </div>
