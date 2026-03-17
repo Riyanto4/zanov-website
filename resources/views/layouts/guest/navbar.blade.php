@@ -4,15 +4,18 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="#" class="text-2xl font-bold tracking-tight">ZANOV</a>
+                    <a href="/" class="flex items-center gap-2">
+                        <img src="{{ asset('img/zanovZlogo.png') }}" alt="ZANOV" class="h-8 w-auto">
+                        <span class="text-2xl font-bold tracking-tight">ZANOV</span>
+                    </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="/" class="hover:text-gray-300 transition duration-300">Home</a>
-                    <a href="#brand-story" class="hover:text-gray-300 transition duration-300">About</a>
-                    <a href="/catalogue" class="hover:text-gray-300 transition duration-300">Collections</a>
-                    <a href="/contact" class="hover:text-gray-300 transition duration-300">Contact</a>
+                    <a href="#brand-story" class="hover:text-gray-300 transition duration-300">Tentang Kami</a>
+                    <a href="/catalogue" class="hover:text-gray-300 transition duration-300">Koleksi</a>
+                    <a href="/contact" class="hover:text-gray-300 transition duration-300">Kontak</a>
                 </nav>
 
                 <!-- Right Side - Login/Profile -->

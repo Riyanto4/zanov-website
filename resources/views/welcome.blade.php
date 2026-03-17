@@ -63,7 +63,7 @@
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-semibold">{{ $product->name }}</h3>
+                        <h3 class="text-xl font-bold text-black">{{ $product->name }}</h3>
                         <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded uppercase">
                             {{ $product->gender }}
                         </span>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-semibold">{{ $product->name }}</h3>
+                        <h3 class="text-xl font-bold text-black">{{ $product->name }}</h3>
                         <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded uppercase">
                             {{ $product->gender }}
                         </span>
@@ -151,26 +151,26 @@
             <div>
                 <h2 class="text-4xl font-bold mb-6 uppercase">Kisah Kami</h2>
                 <p class="text-lg mb-6 leading-relaxed">
-                    Sejak 1995, ZANOV identik dengan keahlian luar biasa dan keanggunan abadi. 
-                    Perjalanan kami dimulai dengan visi sederhana: menciptakan alas kaki yang tidak hanya melengkapi gaya Anda 
-                    tetapi juga merayakan seni pembuatan sepatu.
+                    Sejak November 2022, ZANOV hadir sebagai home industry yang berfokus pada pembuatan alas kaki berkualitas. 
+                    Berawal dari semangat sederhana, kami berkomitmen menghadirkan produk yang tidak hanya menunjang penampilan, 
+                    tetapi juga memberikan kenyamanan dalam setiap langkah.
                 </p>
                 <p class="text-lg mb-8 leading-relaxed">
-                    Setiap pasang dibuat dengan cermat menggunakan bahan terbaik, menggabungkan teknik tradisional 
-                    dengan desain kontemporer. Kami percaya bahwa kemewahan sejati terletak pada detail – jahitan sempurna, 
-                    kulit premium, dan kenyamanan yang pas.
+                    Setiap pasang sepatu ZANOV dibuat dengan ketelitian dan menggunakan bahan pilihan untuk memastikan kualitas terbaik. 
+                    Dengan menggabungkan proses pengerjaan yang rapi dan perhatian pada detail, kami berusaha menghadirkan produk 
+                    yang kuat, nyaman, dan tetap stylish untuk digunakan sehari-hari.
                 </p>
                 <div class="flex space-x-4">
                     <div class="text-center">
-                        <div class="text-3xl font-bold text-accent mb-2">25+</div>
+                        <div class="text-3xl font-bold text-accent mb-2">3+</div>
                         <div class="text-sm uppercase tracking-wide">Tahun Pengalaman</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-bold text-accent mb-2">50K+</div>
+                        <div class="text-3xl font-bold text-accent mb-2">10+</div>
                         <div class="text-sm uppercase tracking-wide">Pelanggan Puas</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-bold text-accent mb-2">100+</div>
+                        <div class="text-3xl font-bold text-accent mb-2">50+</div>
                         <div class="text-sm uppercase tracking-wide">Desain</div>
                     </div>
                 </div>
@@ -214,8 +214,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold mb-4">Gratis Ongkir</h3>
-                <p class="text-gray-600">Gratis ongkir untuk semua pesanan di atas Rp 1.000.000</p>
+                <h3 class="text-xl font-bold mb-4">Garansi Panjang</h3>
+                <p class="text-gray-600">Garansi selama 5 bulan dan terjamin jika barang rusak</p>
             </div>
         </div>
     </div>
@@ -229,20 +229,11 @@
             <div class="col-span-1 md:col-span-2">
                 <h3 class="text-2xl font-bold mb-4">ZANOV</h3>
                 <p class="text-gray-400 mb-6 max-w-md">
-                    Sejak 1995, ZANOV telah menghadirkan keanggunan dalam setiap langkah dengan koleksi sepatu premium yang menggabungkan craftsmanship tradisional dan desain kontemporer.
+                    Elegance in every step
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300">
-                        <i data-feather="facebook" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300">
+                    <a href="https://www.instagram.com/zanovshoes" class="text-gray-400 hover:text-accent transition duration-300">
                         <i data-feather="instagram" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300">
-                        <i data-feather="twitter" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300">
-                        <i data-feather="youtube" class="w-5 h-5"></i>
                     </a>
                 </div>
             </div>
@@ -264,15 +255,15 @@
                 <div class="space-y-3">
                     <div class="flex items-start space-x-3">
                         <i data-feather="map-pin" class="w-5 h-5 text-accent mt-0.5"></i>
-                        <span class="text-gray-400">Jl. Kemang Raya No. 12<br>Jakarta Selatan</span>
+                        <span class="text-gray-400">Jl. Arsadimeja<br>Purwokerto Selatan</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <i data-feather="phone" class="w-5 h-5 text-accent"></i>
-                        <span class="text-gray-400">+62 21 1234 5678</span>
+                        <span class="text-gray-400">+62 895-3830-27843</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <i data-feather="mail" class="w-5 h-5 text-accent"></i>
-                        <span class="text-gray-400">hello@zanov.com</span>
+                        <span class="text-gray-400">zanovshoes@gmail.com</span>
                     </div>
                 </div>
             </div>
