@@ -107,8 +107,8 @@
                             <div class="flex flex-col md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-6">
                                 <!-- Product Image -->
                                 <div class="flex-shrink-0 w-24 h-24 bg-gray-900 border border-gray-800">
-                                    @if($item->product->image)
-                                        <img src="{{ Storage::url($item->product->image) }}" 
+                                    @if($item->product->photo)
+                                        <img src="{{ Storage::url($item->product->photo) }}" 
                                              alt="{{ $item->product->name }}" 
                                              class="w-full h-full object-cover">
                                     @else
@@ -142,7 +142,7 @@
                                                 @endfor
                                             </div>
                                             <span class="ml-2 text-sm text-gray-400">
-                                                {{ number_format($item->product->averageRating(), 1) }} ({{ $item->product->ratings()->count() }} ulasan)
+                                                {{ number_format($item->product->averageRating(), 1) }} ({{ $item->product->ratings()->count() }} rating)
                                             </span>
                                         </div>
                                     @endif

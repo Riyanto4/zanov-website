@@ -1,6 +1,6 @@
 {{-- resources/views/components/rating-form.blade.php --}}
 <div class="mt-6 pt-6 border-t border-gray-800">
-    <h3 class="text-lg font-medium text-accent mb-4">Rate this Product</h3>
+    <h3 class="text-lg font-medium text-accent mb-4">Beri Rating Produk Ini</h3>
     
     @if($existingRating)
         <div class="mb-4 p-3 bg-gray-900 border border-gray-700">
@@ -13,7 +13,7 @@
                     @endfor
                 </div>
                 <span class="ml-2 text-sm text-gray-400">
-                    You rated {{ $existingRating->rating }} stars
+                    Anda memberi rating {{ $existingRating->rating }} bintang
                 </span>
             </div>
             @if($existingRating->comment)
@@ -39,25 +39,25 @@
                     </label>
                 @endfor
                 <span class="ml-2 text-sm text-gray-400">
-                    (Select your rating)
+                    (Pilih rating Anda)
                 </span>
             </div>
             
             <!-- Comment -->
             <div>
                 <label for="comment-{{ $product->id }}" class="block text-sm font-medium text-gray-400 mb-1">
-                    Your Review (Optional)
+                    Ulasan Anda (Opsional)
                 </label>
                 <textarea id="comment-{{ $product->id }}" name="comment" rows="3"
                           class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-none text-gray-300 focus:ring-2 focus:ring-accent focus:border-accent placeholder-gray-500"
-                          placeholder="Share your experience with this product...">{{ old('comment') }}</textarea>
+                          placeholder="Bagikan pengalaman Anda dengan produk ini...">{{ old('comment') }}</textarea>
             </div>
             
             <!-- Submit Button -->
             <div>
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 border border-accent text-sm font-medium rounded-none shadow-sm text-accent hover:bg-accent hover:text-primary transition duration-300">
-                    Submit Rating
+                    Kirim Rating
                 </button>
             </div>
         </form>
