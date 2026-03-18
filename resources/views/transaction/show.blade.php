@@ -6,8 +6,8 @@
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight text-accent">Order Details</h1>
-            <p class="text-gray-300">Reference: {{ $transaction->reference_no }}</p>
+            <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight text-accent">Detail Pesanan</h1>
+            <p class="text-gray-300">Referensi: {{ $transaction->reference_no }}</p>
         </div>
 
         <div class="space-y-6">
@@ -16,18 +16,18 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Order Information -->
                     <div>
-                        <h2 class="text-2xl font-bold text-accent mb-4">Order Information</h2>
+                        <h2 class="text-2xl font-bold text-accent mb-4">Informasi Pesanan</h2>
                         <div class="space-y-3">
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Reference No:</span>
+                                <span class="text-gray-300">No Referensi:</span>
                                 <span class="text-accent font-bold">{{ $transaction->reference_no }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Order Date:</span>
+                                <span class="text-gray-300">Tanggal Pesanan:</span>
                                 <span class="text-accent">{{ $transaction->created_at->format('M d, Y H:i') }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-300">Payment Method:</span>
+                                <span class="text-gray-300">Metode Pembayaran:</span>
                                 <span class="text-accent">{{ $transaction->payment_method }}</span>
                             </div>
                             <div class="flex justify-between">
@@ -45,19 +45,19 @@
 
                     <!-- Customer Information -->
                     <div>
-                        <h2 class="text-2xl font-bold text-accent mb-4">Customer Information</h2>
+                        <h2 class="text-2xl font-bold text-accent mb-4">Informasi Pelanggan</h2>
                         <div class="space-y-3">
                             <div>
-                                <span class="text-gray-300">Name:</span>
+                                <span class="text-gray-300">Nama:</span>
                                 <p class="text-accent">{{ $transaction->name }}</p>
                             </div>
                             <div>
-                                <span class="text-gray-300">Address:</span>
+                                <span class="text-gray-300">Alamat:</span>
                                 <p class="text-accent">{{ $transaction->address }}</p>
                             </div>
                             @if($transaction->notes)
                             <div>
-                                <span class="text-gray-300">Notes:</span>
+                                <span class="text-gray-300">Catatan:</span>
                                 <p class="text-accent">{{ $transaction->notes }}</p>
                             </div>
                             @endif
@@ -68,11 +68,11 @@
                 <!-- Proof of Payment -->
                 @if($transaction->proof)
                 <div class="mt-6 pt-6 border-t border-gray-800">
-                    <h3 class="text-lg font-bold text-accent mb-3">Proof of Payment</h3>
+                    <h3 class="text-lg font-bold text-accent mb-3">Bukti Pembayaran</h3>
                     <div class="flex items-center space-x-4">
                         @if(in_array(pathinfo($transaction->proof, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
                             <img src="{{ Storage::url($transaction->proof) }}" 
-                                 alt="Payment Proof" 
+                                 alt="Bukti Pembayaran" 
                                  class="w-32 h-32 object-cover border border-gray-700 cursor-pointer"
                                  onclick="openModal('{{ Storage::url($transaction->proof) }}')">
                         @else
@@ -81,11 +81,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
                                 <div>
-                                    <p class="text-accent font-bold">Payment Proof</p>
+                                    <p class="text-accent font-bold">Bukti Pembayaran</p>
                                     <a href="{{ Storage::url($transaction->proof) }}" 
                                        target="_blank" 
                                        class="text-sm text-gray-400 hover:text-accent transition duration-300">
-                                        View Document
+                                        Lihat Dokumen
                                     </a>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
             <!-- Order Items -->
             <div class="bg-primary border border-gray-800 rounded-none">
                 <div class="p-6 border-b border-gray-800">
-                    <h2 class="text-2xl font-bold text-accent">Order Items</h2>
+                    <h2 class="text-2xl font-bold text-accent">Item Pesanan</h2>
                 </div>
                 
                 <div class="divide-y divide-gray-800">
@@ -123,7 +123,7 @@
                                 <!-- Product Info -->
                                 <div class="flex-1 min-w-0">
                                     <h3 class="text-lg font-bold text-accent mb-2">{{ $item->product->name }}</h3>
-                                    <p class="text-gray-400 text-sm mb-1">Quantity: {{ $item->quantity }}</p>
+                                    <p class="text-gray-400 text-sm mb-1">Jumlah: {{ $item->quantity }}</p>
                                     <p class="text-accent mb-2">Rp {{ number_format($item->price, 0, ',', '.') }} x {{ $item->quantity }}</p>
                                     <p class="text-xl font-bold text-accent">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</p>
                                     
@@ -142,7 +142,7 @@
                                                 @endfor
                                             </div>
                                             <span class="ml-2 text-sm text-gray-400">
-                                                {{ number_format($item->product->averageRating(), 1) }} ({{ $item->product->ratings()->count() }} reviews)
+                                                {{ number_format($item->product->averageRating(), 1) }} ({{ $item->product->ratings()->count() }} ulasan)
                                             </span>
                                         </div>
                                     @endif
@@ -171,11 +171,11 @@
                         <span class="text-accent">Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-gray-300">Shipping:</span>
-                        <span class="text-accent">Included</span>
+                        <span class="text-gray-300">Pengiriman:</span>
+                        <span class="text-accent">Termasuk</span>
                     </div>
                     <div class="flex justify-between items-center pt-4 border-t border-gray-800">
-                        <span class="text-xl text-gray-300 font-bold">Total Amount:</span>
+                        <span class="text-xl text-gray-300 font-bold">Total Pembayaran:</span>
                         <span class="text-3xl font-bold text-accent">Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</span>
                     </div>
                 </div>
@@ -197,11 +197,11 @@
             <div class="flex flex-col sm:flex-row justify-between gap-4">
                 <a href="{{ route('transactions.index') }}" 
                    class="flex-1 border border-accent text-accent px-6 py-3 text-center uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300 font-bold">
-                    ← Back to History
+                    ← Kembali ke Riwayat
                 </a>
                 <a href="{{ route('catalogue') }}" 
                    class="flex-1 bg-accent text-primary px-6 py-3 text-center uppercase tracking-wider font-bold hover:bg-gray-200 transition duration-300">
-                    Continue Shopping
+                    Lanjutkan Belanja
                 </a>
             </div>
         </div>
