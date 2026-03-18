@@ -68,7 +68,7 @@
 
                             <!-- Total -->
                             <div class="col-span-2 text-right">
-                                <p class="text-xl font-bold text-accent">${{ number_format($transaction->total_amount, 2) }}</p>
+                                <p class="text-xl font-bold text-accent">Rp{{ number_format($transaction->total_amount, 2) }}</p>
                             </div>
 
                             <!-- Action -->

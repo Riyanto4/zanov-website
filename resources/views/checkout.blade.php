@@ -6,7 +6,7 @@
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Checkout</h1>
-            <p class="text-gray-300">Complete your purchase</p>
+            <p class="text-gray-300">Selesaikan pembelian Anda</p>
         </div>
 
         @if($cart && $cart->items->count() > 0)
@@ -18,11 +18,11 @@
                     <div class="space-y-6">
                         <!-- Customer Information -->
                         <div class="bg-primary border border-gray-800 rounded-none p-6">
-                            <h2 class="text-2xl font-bold text-accent mb-4">Customer Information</h2>
+                            <h2 class="text-2xl font-bold text-accent mb-4">Informasi Pelanggan</h2>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <label for="name" class="block text-gray-300 mb-2">Full Name *</label>
+                                    <label for="name" class="block text-gray-300 mb-2">Nama Lengkap *</label>
                                     <input type="text" 
                                            id="name"
                                            name="name" 
@@ -32,7 +32,7 @@
                                 </div>
                                 
                                 <div>
-                                    <label for="address" class="block text-gray-300 mb-2">Delivery Address *</label>
+                                    <label for="address" class="block text-gray-300 mb-2">Alamat Pengiriman *</label>
                                     <textarea id="address"
                                               name="address" 
                                               rows="3"
@@ -44,17 +44,17 @@
 
                         <!-- Payment Method -->
                         <div class="bg-primary border border-gray-800 rounded-none p-6">
-                            <h2 class="text-2xl font-bold text-accent mb-4">Payment Method</h2>
+                            <h2 class="text-2xl font-bold text-accent mb-4">Metode Pembayaran</h2>
                             
                             <div class="space-y-3">
                                 <label class="flex items-center space-x-3 cursor-pointer">
                                     <input type="radio" name="payment_method" value="CASH" class="text-accent focus:ring-accent" checked>
-                                    <span class="text-gray-300">Cash</span>
+                                    <span class="text-gray-300">Tunai</span>
                                 </label>
                                 
                                 <label class="flex items-center space-x-3 cursor-pointer">
                                     <input type="radio" name="payment_method" value="TRANSFER" class="text-accent focus:ring-accent">
-                                    <span class="text-gray-300">Bank Transfer</span>
+                                    <span class="text-gray-300">Transfer Bank</span>
                                 </label>
                                 
                                 <label class="flex items-center space-x-3 cursor-pointer">
@@ -70,21 +70,21 @@
 
                             <!-- Proof Upload (conditional) -->
                             <div id="proof-upload" class="mt-4 hidden">
-                                <label class="block text-gray-300 mb-2">Payment Proof *</label>
+                                <label class="block text-gray-300 mb-2">Bukti Pembayaran *</label>
                                 <input type="file" 
                                        name="proof" 
                                        accept=".jpg,.jpeg,.png,.pdf"
                                        class="w-full px-4 py-3 bg-secondary border border-gray-700 text-accent file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-primary hover:file:bg-gray-200 transition duration-300">
-                                <p class="text-sm text-gray-400 mt-2">Upload proof of payment (JPG, PNG, PDF, max 2MB)</p>
+                                <p class="text-sm text-gray-400 mt-2">Upload bukti pembayaran (JPG, PNG, PDF, maks 2MB)</p>
                             </div>
                         </div>
 
                         <!-- Additional Notes -->
                         <div class="bg-primary border border-gray-800 rounded-none p-6">
-                            <h2 class="text-2xl font-bold text-accent mb-4">Additional Notes</h2>
+                            <h2 class="text-2xl font-bold text-accent mb-4">Catatan Tambahan</h2>
                             <textarea name="notes" 
                                       rows="3"
-                                      placeholder="Any special instructions for your order..."
+                                      placeholder="Instruksi khusus untuk pesanan Anda..."
                                       class="w-full px-4 py-3 bg-secondary border border-gray-700 text-accent placeholder-gray-500 focus:outline-none focus:border-accent transition duration-300 resize-none"></textarea>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                         <!-- Order Items -->
                         <div class="bg-primary border border-gray-800 rounded-none">
                             <div class="p-6 border-b border-gray-800">
-                                <h2 class="text-2xl font-bold text-accent">Order Summary</h2>
+                                <h2 class="text-2xl font-bold text-accent">Ringkasan Pesanan</h2>
                             </div>
                             
                             <div class="divide-y divide-gray-800 max-h-96 overflow-y-auto">
@@ -116,13 +116,13 @@
                                         <!-- Product Info -->
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-bold text-accent mb-1">{{ $item->product->name }}</h3>
-                                            <p class="text-gray-400 text-sm">Qty: {{ $item->quantity }}</p>
-                                            <p class="text-accent font-bold">${{ number_format($item->price, 2) }}</p>
+                                            <p class="text-gray-400 text-sm">Jumlah: {{ $item->quantity }}</p>
+                                            <p class="text-accent font-bold">Rp{{ number_format($item->price, 2) }}</p>
                                         </div>
 
                                         <!-- Subtotal -->
                                         <div class="text-right">
-                                            <p class="text-lg font-bold text-accent">${{ number_format($item->subtotal, 2) }}</p>
+                                            <p class="text-lg font-bold text-accent">Rp{{ number_format($item->subtotal, 2) }}</p>
                                         </div>
                                     </div>
                                 @endforeach
@@ -132,19 +132,19 @@
                             <div class="p-6 border-t border-gray-800">
                                 <div class="flex justify-between items-center mb-2">
                                     <span class="text-gray-300">Subtotal:</span>
-                                    <span class="text-accent">${{ number_format($cart->total_amount, 2) }}</span>
+                                    <span class="text-accent">Rp{{ number_format($cart->total_amount, 2) }}</span>
                                 </div>
                                 <div class="flex justify-between items-center mb-2">
-                                    <span class="text-gray-300">Shipping:</span>
-                                    <span class="text-accent">$0.00</span>
+                                    <span class="text-gray-300">Pengiriman:</span>
+                                    <span class="text-accent">Rp0.00</span>
                                 </div>
                                 <div class="flex justify-between items-center mb-4">
-                                    <span class="text-gray-300">Tax:</span>
-                                    <span class="text-accent">$0.00</span>
+                                    <span class="text-gray-300">Pajak:</span>
+                                    <span class="text-accent">Rp0.00</span>
                                 </div>
                                 <div class="flex justify-between items-center pt-4 border-t border-gray-800">
-                                    <span class="text-xl text-gray-300 font-bold">Total Amount:</span>
-                                    <span class="text-2xl font-bold text-accent">${{ number_format($cart->total_amount, 2) }}</span>
+                                    <span class="text-xl text-gray-300 font-bold">Total Pembayaran:</span>
+                                    <span class="text-2xl font-bold text-accent">Rp{{ number_format($cart->total_amount, 2) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -152,13 +152,13 @@
                         <!-- Checkout Button -->
                         <button type="submit" 
                                 class="w-full bg-accent text-primary px-8 py-4 text-xl uppercase tracking-wider font-bold hover:bg-gray-200 transition duration-300 text-center">
-                            Complete Order
+                            Selesaikan Pesanan
                         </button>
 
                         <!-- Back to Cart -->
                         <a href="{{ route('cart.index') }}" 
                            class="block w-full border border-accent text-accent px-8 py-4 text-center uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
-                            Back to Cart
+                            Kembali ke Keranjang
                         </a>
                     </div>
                 </div>
@@ -167,11 +167,11 @@
             <!-- Empty Cart -->
             <div class="text-center py-20">
                 <i data-feather="shopping-cart" class="w-24 h-24 text-gray-600 mx-auto mb-6"></i>
-                <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">Your Cart is Empty</h3>
-                <p class="text-gray-500 text-lg mb-8">Start adding some products to your cart</p>
+                <h3 class="text-3xl font-bold text-gray-400 mb-4 uppercase">Keranjang Anda Kosong</h3>
+                <p class="text-gray-500 text-lg mb-8">Mulai tambahkan produk ke keranjang Anda</p>
                 <a href="{{ route('catalogue') }}" 
                    class="border border-accent text-accent px-8 py-3 uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
-                    Browse Products
+                    Lihat Produk
                 </a>
             </div>
         @endif

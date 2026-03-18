@@ -70,7 +70,7 @@
                     </div>
                     <p class="text-gray-600 mb-4 line-clamp-2">{{ Str::limit($product->description, 100) }}</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-accent">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-2xl font-bold text-accent">Rp{{ number_format($product->price, 2) }}</span>
                         @if($product->stock > 0)
                         <a href="/catalogue" class="bg-accent text-primary px-6 py-2 uppercase tracking-wide text-sm hover:bg-gray-200 transition duration-300">
                             Lihat Detail
@@ -115,7 +115,7 @@
                     </div>
                     <p class="text-gray-600 mb-4 line-clamp-2">{{ Str::limit($product->description, 100) }}</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-accent">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-2xl font-bold text-accent">Rp{{ number_format($product->price, 2) }}</span>
                         @if($product->stock > 0)
                         <a href="/catalogue" class="bg-accent text-primary px-6 py-2 uppercase tracking-wide text-sm hover:bg-gray-200 transition duration-300">
                             Lihat Detail
