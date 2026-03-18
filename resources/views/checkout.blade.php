@@ -134,17 +134,12 @@
                                     <span class="text-gray-300">Subtotal:</span>
                                     <span class="text-accent">Rp{{ number_format($cart->total_amount, 2) }}</span>
                                 </div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-gray-300">Pengiriman:</span>
-                                    <span class="text-accent">Rp0.00</span>
-                                </div>
-                                <div class="flex justify-between items-center mb-4">
-                                    <span class="text-gray-300">Pajak:</span>
-                                    <span class="text-accent">Rp0.00</span>
-                                </div>
                                 <div class="flex justify-between items-center pt-4 border-t border-gray-800">
                                     <span class="text-xl text-gray-300 font-bold">Total Pembayaran:</span>
-                                    <span class="text-2xl font-bold text-accent">Rp{{ number_format($cart->total_amount, 2) }}</span>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-bold text-accent">Rp{{ number_format($cart->total_amount, 2) }}</span>
+                                        <p class="text-sm text-gray-400 mt-1">Ongkos kirim ditanggung konsumen</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
