@@ -149,7 +149,7 @@
                                     <h4 class="font-bold text-accent group-hover:text-white transition duration-300 text-sm leading-tight mb-1">
                                         {{ $product->name }}
                                     </h4>
-                                    <p class="text-accent font-bold text-lg">${{ number_format($product->price, 2) }}</p>
+                                    <p class="text-accent font-bold text-lg">Rp{{ number_format($product->price, 2) }}</p>
                                     
                                     <!-- Stock & Popularity Badge -->
                                     <div class="flex items-center space-x-2 mt-1">
