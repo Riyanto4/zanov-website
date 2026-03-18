@@ -61,11 +61,11 @@
                                     <input type="radio" name="payment_method" value="QRIS" class="text-accent focus:ring-accent">
                                     <span class="text-gray-300">QRIS</span>
                                 </label>
-                                
+                            {{--     
                                 <label class="flex items-center space-x-3 cursor-pointer">
                                     <input type="radio" name="payment_method" value="COD" class="text-accent focus:ring-accent">
                                     <span class="text-gray-300">Cash on Delivery (COD)</span>
-                                </label>
+                                </label> --}}
                             </div>
 
                             <!-- Proof Upload (conditional) -->
