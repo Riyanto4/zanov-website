@@ -40,12 +40,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [TransactionController::class, 'create'])->name('checkout');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
-    Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     // Rating Routes
     Route::post('/transactions/{transaction}/rate', [RatingController::class, 'store'])
         ->name('ratings.store');
 });
+
+// Transaction Detail Route - accessible by both users and admins
+Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
 
 // Admin Routes Group dengan prefix /admin
 Route::middleware(['auth', 'role:ADMIN'])->prefix('admin')->group(function () {
