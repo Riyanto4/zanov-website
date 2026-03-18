@@ -206,8 +206,8 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
-        // Ensure user can only see their own transactions
-        if ($transaction->user_id !== auth()->id()) {
+        // Allow admin to see all transactions, users can only see their own
+        if (auth()->user()->role !== 'ADMIN' && $transaction->user_id !== auth()->id()) {
             abort(403);
         }
 
