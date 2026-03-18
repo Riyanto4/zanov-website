@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | ZANOV | Premium Footwear</title>
+    <title>Register | ZANOV | Sepatu Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script>
@@ -68,9 +68,9 @@
         <div class="max-w-md w-full">
             <!-- Header -->
             <div class="text-center mb-12">
-                <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Create Account</h1>
+                <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Buat Akun</h1>
                 <p class="text-gray-300">
-                    Join ZANOV for premium footwear experience
+                    Bergabung dengan ZANOV untuk pengalaman sepatu premium
                 </p>
             </div>
 
@@ -80,7 +80,7 @@
 
                 <!-- Name -->
                 <div class="mb-6">
-                    <label for="name" class="block text-sm font-bold mb-2 uppercase tracking-wide">Name</label>
+                    <label for="name" class="block text-sm font-bold mb-2 uppercase tracking-wide">Nama</label>
                     <input id="name" 
                            type="text" 
                            name="name" 
@@ -115,7 +115,7 @@
 
                 <!-- Phone Number -->
                 <div class="mb-6">
-                    <label for="phone" class="block text-sm font-bold mb-2 uppercase tracking-wide">Phone Number</label>
+                    <label for="phone" class="block text-sm font-bold mb-2 uppercase tracking-wide">Nomor Telepon</label>
                     <input id="phone" 
                            type="tel" 
                            name="phone" 
@@ -132,7 +132,7 @@
 
                 <!-- Password -->
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-bold mb-2 uppercase tracking-wide">Password</label>
+                    <label for="password" class="block text-sm font-bold mb-2 uppercase tracking-wide">Kata Sandi</label>
                     <input id="password" 
                            type="password" 
                            name="password" 
@@ -148,7 +148,7 @@
 
                 <!-- Confirm Password -->
                 <div class="mb-6">
-                    <label for="password_confirmation" class="block text-sm font-bold mb-2 uppercase tracking-wide">Confirm Password</label>
+                    <label for="password_confirmation" class="block text-sm font-bold mb-2 uppercase tracking-wide">Konfirmasi Kata Sandi</label>
                     <input id="password_confirmation" 
                            type="password" 
                            name="password_confirmation" 
@@ -165,14 +165,14 @@
                 <!-- Submit Button -->
                 <div class="flex items-center justify-between mt-8">
                     <a href="{{ route('login') }}" class="text-sm text-gray-400 hover:text-accent transition duration-300 underline">
-                        Already registered?
+                        Sudah punya akun?
                     </a>
                     
                     <button type="submit" 
                             id="registerButton"
                             class="bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200 transition duration-300 flex items-center">
                         <div class="spinner hidden"></div>
-                        <span class="button-text">Register</span>
+                        <span class="button-text">Daftar</span>
                     </button>
                 </div>
             </form>
@@ -191,7 +191,7 @@
             
             // Show loading spinner
             spinner.classList.remove('hidden');
-            buttonText.textContent = 'Creating Account...';
+            buttonText.textContent = 'Membuat Akun...';
             registerButton.disabled = true;
         });
     </script>

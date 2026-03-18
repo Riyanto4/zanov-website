@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | ZANOV | Premium Footwear</title>
+    <title>Login | ZANOV | Sepatu Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script>
@@ -46,9 +46,9 @@
         <div class="max-w-md w-full">
             <!-- Header -->
             <div class="text-center mb-12">
-                <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Welcome Back</h1>
+                <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Selamat Datang Kembali</h1>
                 <p class="text-gray-300">
-                    Sign in to your ZANOV account
+                    Masuk ke akun ZANOV Anda
                 </p>
             </div>
 
@@ -83,7 +83,7 @@
 
                 <!-- Password -->
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-bold mb-2 uppercase tracking-wide">Password</label>
+                    <label for="password" class="block text-sm font-bold mb-2 uppercase tracking-wide">Kata Sandi</label>
                     <input id="password" 
                            type="password" 
                            name="password" 
@@ -105,7 +105,7 @@
                             id="loginButton"
                             class="bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200 transition duration-300 flex items-center">
                         <div class="spinner hidden"></div>
-                        <span class="button-text">Log in</span>
+                        <span class="button-text">Masuk</span>
                     </button>
                 </div>
             </form>
@@ -113,8 +113,8 @@
             <!-- Register Link -->
             <div class="text-center mt-8">
                 <p class="text-gray-400">
-                    Don't have an account? 
-                    <a href="{{ route('register') }}" class="text-accent font-bold hover:underline">Create one here</a>
+                    Belum punya akun? 
+                    <a href="{{ route('register') }}" class="text-accent font-bold hover:underline">Buat akun di sini</a>
                 </p>
             </div>
         </div>
@@ -132,7 +132,7 @@
             
             // Show loading spinner
             spinner.classList.remove('hidden');
-            buttonText.textContent = 'Logging in...';
+            buttonText.textContent = 'Sedang masuk...';
             loginButton.disabled = true;
         });
     </script>
