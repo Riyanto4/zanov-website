@@ -35,7 +35,7 @@
                                     <div class="flex-1 min-w-0">
                                         <h3 class="text-lg font-bold text-accent mb-2">{{ $item->product->name }}</h3>
                                         <p class="text-gray-400 text-sm mb-1">Kode: {{ $item->product->code }}</p>
-                                        <p class="text-accent font-bold text-lg">${{ number_format($item->price, 2) }}</p>
+                                        <p class="text-accent font-bold text-lg">Rp{{ number_format($item->price, 2) }}</p>
                                     </div>
 
                                     <!-- Quantity Controls -->
@@ -64,7 +64,7 @@
 
                                     <!-- Subtotal -->
                                     <div class="text-right">
-                                        <p class="text-2xl font-bold text-accent mb-2">${{ number_format($item->subtotal, 2) }}</p>
+                                        <p class="text-2xl font-bold text-accent mb-2">Rp{{ number_format($item->subtotal, 2) }}</p>
                                         
                                         <!-- Remove Button -->
                                         <form action="{{ route('cart.destroy', $item) }}" method="POST" class="inline">
@@ -84,7 +84,7 @@
                         <div class="border-t border-gray-800 p-6">
                             <div class="flex justify-between items-center mb-4">
                                 <span class="text-xl text-gray-300">Total Pembayaran:</span>
-                                <span class="text-3xl font-bold text-accent">${{ number_format($cart->total_amount, 2) }}</span>
+                                <span class="text-3xl font-bold text-accent">Rp{{ number_format($cart->total_amount, 2) }}</span>
                             </div>
                             
                             <div class="flex justify-between space-x-4">
