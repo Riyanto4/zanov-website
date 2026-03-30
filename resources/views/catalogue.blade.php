@@ -7,9 +7,11 @@
     isOpen: false, 
     selectedImage: '', 
     selectedName: '',
-    openModal(image, name) {
+    selectedDescription: '',
+    openModal(image, name, description) {
         this.selectedImage = image;
         this.selectedName = name;
+        this.selectedDescription = description;
         this.isOpen = true;
     }
 }" 
@@ -186,7 +188,7 @@ class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
                         <!-- Overlay on Hover -->
                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
                             @if($imageUrl)
-                            <button @click="openModal('{{ $imageUrl }}', '{{ $product->name }}')" 
+                            <button @click="openModal('{{ $imageUrl }}', '{{ $product->name }}', '{{ Str::limit($product->description, 300) }}')" 
                                     class="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200">
                                 Lihat Cepat
                             </button>
@@ -346,6 +348,10 @@ class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
                                 <h2 class="text-4xl font-bold text-accent mb-6 uppercase tracking-tight leading-tight" x-text="selectedName"></h2>
                                 <div class="h-1 w-20 bg-accent mb-8"></div>
                                 
+                                <!-- Product Description -->
+                                <div class="mb-8">
+                                    <p class="text-gray-300 leading-relaxed" x-text="selectedDescription"></p>
+                                </div>
                             </div>
                             
                             <div class="flex flex-col sm:flex-row gap-4 mt-auto">
