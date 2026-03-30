@@ -33,9 +33,14 @@
         <!-- Footer content... -->
     </footer>
 
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <script>
         // Inisialisasi Feather Icons
-        feather.replace();
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
 
         // Fungsi dropdown profile
         const profileButton = document.getElementById('profile-button');
@@ -56,5 +61,6 @@
             });
         }
     </script>
+    @stack('scripts')
 </body>
 </html>

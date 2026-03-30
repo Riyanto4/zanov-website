@@ -3,7 +3,18 @@
 @section('content')
 
 <!-- Catalogue Section -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
+<section x-data="{ 
+    isOpen: false, 
+    selectedImage: '', 
+    selectedName: '',
+    openModal(image, name) {
+        this.selectedImage = image;
+        this.selectedName = name;
+        this.isOpen = true;
+    }
+}" 
+x-effect="isOpen ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden')"
+class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
     <div class="max-w-7xl mx-auto">
         @php
             $genderLabels = [
@@ -139,13 +150,14 @@
                 @php
                     $averageRating = $product->averageRating();
                     $ratingCount = $product->ratings_count;
+                    $imageUrl = $product->photo ? Storage::url($product->photo) : null;
                 @endphp
                 
                 <div class="bg-primary border border-gray-800 rounded-none overflow-hidden group hover:border-gray-600 transition-all duration-300">
                     <!-- Product Image -->
                     <div class="relative h-80 overflow-hidden">
-                        @if($product->photo)
-                            <img src="{{ Storage::url($product->photo) }}" 
+                        @if($imageUrl)
+                            <img src="{{ $imageUrl }}" 
                                  alt="{{ $product->name }}" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         @else
@@ -173,9 +185,12 @@
 
                         <!-- Overlay on Hover -->
                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
-                            <button class="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200">
+                            @if($imageUrl)
+                            <button @click="openModal('{{ $imageUrl }}', '{{ $product->name }}')" 
+                                    class="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-accent text-primary px-6 py-3 font-bold uppercase tracking-wider text-sm hover:bg-gray-200">
                                 Lihat Cepat
                             </button>
+                            @endif
                         </div>
                     </div>
 
@@ -280,6 +295,75 @@
             </div>
         @endif
     </div>
+
+    <!-- Quick View Modal -->
+    <div x-show="isOpen" 
+         x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 overflow-y-auto" 
+         aria-labelledby="modal-title" role="dialog" aria-modal="true"
+         style="display: none;">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div @click="isOpen = false" 
+                 class="fixed inset-0 transition-opacity bg-black bg-opacity-95 backdrop-blur-sm" aria-hidden="true"></div>
+
+            <!-- Modal Panel -->
+            <div x-show="isOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 class="inline-block overflow-hidden transition-all transform bg-primary border border-gray-800 rounded-none sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">
+                
+                <div class="relative bg-primary">
+                    <!-- Close Button -->
+                    <button @click="isOpen = false" 
+                            class="absolute top-6 right-6 z-20 text-gray-400 hover:text-white transition duration-300 bg-black/50 p-2 border border-gray-800 hover:border-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+
+                    <div class="flex flex-col md:flex-row min-h-[500px]">
+                        <!-- Image Container -->
+                        <div class="w-full md:w-3/5 bg-black flex items-center justify-center p-4">
+                            <img :src="selectedImage" :alt="selectedName" 
+                                 class="max-w-full h-auto object-contain max-h-[85vh] shadow-2xl">
+                        </div>
+                        
+                        <!-- Info Container -->
+                        <div class="w-full md:w-2/5 p-12 text-left flex flex-col justify-center border-l border-gray-800">
+                            <div class="mb-8">
+                                <span class="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase mb-4 block">Product Detail</span>
+                                <h2 class="text-4xl font-bold text-accent mb-6 uppercase tracking-tight leading-tight" x-text="selectedName"></h2>
+                                <div class="h-1 w-20 bg-accent mb-8"></div>
+                                
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 mt-auto">
+                                <button @click="isOpen = false" 
+                                        class="flex-1 bg-accent text-primary px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-gray-200 transition duration-300 text-center">
+                                    Tutup Preview
+                                </button>
+                                <button @click="isOpen = false" 
+                                        class="flex-1 border border-gray-700 text-accent px-8 py-4 font-bold uppercase tracking-widest text-sm hover:border-accent transition duration-300 text-center">
+                                    Kembali
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 @endsection
@@ -303,6 +387,9 @@
 </script>
 
 <style>
+    /* x-cloak for Alpine.js */
+    [x-cloak] { display: none !important; }
+
     /* Custom styling for star ratings */
     .star-rating i {
         stroke-width: 1;
