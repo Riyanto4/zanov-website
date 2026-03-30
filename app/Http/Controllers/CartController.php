@@ -145,7 +145,7 @@ class CartController extends Controller
                 $pairSupport = $pairCount / $totalTransactions;
                 
                 // Hitung confidence
-                if ($productSupports[$cartProductId] > 0) {
+                if (isset($productSupports[$cartProductId]) && $productSupports[$cartProductId] > 0) {
                     $confidence = $pairCount / ($productTransactions[$cartProductId]);
                     
                     // Filter berdasarkan minimum support dan confidence
