@@ -29,7 +29,6 @@
             'PAID' => 'Lunas',
             'PENDING' => 'Menunggu',
             'CANCELED' => 'Dibatalkan',
-            'REFUNDED' => 'Dikembalikan',
         ];
         $paymentLabels = [
             'CASH' => 'Tunai',
@@ -111,7 +110,6 @@
                         'PAID' => ['color' => 'bg-green-100 text-green-800', 'icon' => 'check-circle'],
                         'PENDING' => ['color' => 'bg-yellow-100 text-yellow-800', 'icon' => 'clock'],
                         'CANCELED' => ['color' => 'bg-red-100 text-red-800', 'icon' => 'x-circle'],
-                        'REFUNDED' => ['color' => 'bg-gray-100 text-gray-800', 'icon' => 'alert-circle'],
                     ];
                     
                     foreach($statuses as $status => $style):
@@ -170,7 +168,6 @@
                     <option value="PENDING" {{ ($filters['status'] ?? '') == 'PENDING' ? 'selected' : '' }}>Menunggu</option>
                     <option value="PAID" {{ ($filters['status'] ?? '') == 'PAID' ? 'selected' : '' }}>Lunas</option>
                     <option value="CANCELED" {{ ($filters['status'] ?? '') == 'CANCELED' ? 'selected' : '' }}>Dibatalkan</option>
-                    <option value="REFUNDED" {{ ($filters['status'] ?? '') == 'REFUNDED' ? 'selected' : '' }}>Dikembalikan</option>
                 </select>
             </div>
 
