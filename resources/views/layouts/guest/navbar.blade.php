@@ -65,6 +65,12 @@
                                         <i data-feather="settings" class="w-4 h-4 mr-2"></i>
                                         Pengaturan
                                     </a>
+                                    @if(auth()->user()->role === 'ADMIN')
+                                        <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-sm text-accent hover:bg-gray-800 transition duration-300">
+                                            <i data-feather="grid" class="w-4 h-4 mr-2"></i>
+                                            Masuk ke Dashboard Admin
+                                        </a>
+                                    @endif
                                     <div class="border-t border-gray-700"></div>
                                     <form method="POST" action="{{ route('logout') }}" class="block w-full">
                                         @csrf
