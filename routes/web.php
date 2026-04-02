@@ -63,6 +63,7 @@ Route::middleware(['auth', 'role:ADMIN'])->prefix('admin')->group(function () {
 
     // Transactions Management
     Route::get('/transactions', [TransactionController::class, 'showAll'])->name('transactions.all');
+    Route::get('/transactions/export', [TransactionController::class, 'export'])->name('transactions.export');
     Route::post('/transactions/{transaction}/verify', [TransactionController::class, 'verify'])->name('transactions.verify');
     Route::post('/transactions/{transaction}/cancel', [TransactionController::class, 'cancel'])->name('transactions.cancel');
 

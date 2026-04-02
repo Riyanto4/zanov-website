@@ -8,11 +8,13 @@ use App\Models\CartItem;
 use App\Models\TransactionItem;
 use App\Models\Product;
 use App\Models\StockStatement;
+use App\Exports\TransactionsExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
 {
@@ -288,6 +290,20 @@ class TransactionController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to cancel transaction: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Export transactions to Excel
+     */
+    public function export(Request $request)
+    {
+        try {
+            $fileName = 'transactions_' . date('Y-m-d_H-i-s') . '.xlsx';
+            
+            return Excel::download(new TransactionsExport($request), $fileName);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to export transactions: ' . $e->getMessage());
         }
     }
 }

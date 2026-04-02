@@ -68,6 +68,45 @@
                                 </label> --}}
                             </div>
 
+                            <!-- Bank Transfer Info (shown when TRANSFER is selected) -->
+                            <div id="bank-info" class="mt-4 hidden">
+                                <div class="bg-secondary border border-gray-700 rounded p-4">
+                                    <h3 class="text-lg font-bold text-accent mb-3">Informasi Rekening</h3>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Bank:</span>
+                                            <span class="text-accent font-semibold">BRI</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Atas Nama:</span>
+                                            <span class="text-accent font-semibold">ZANOV</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Nomor Rekening:</span>
+                                            <span class="text-accent font-semibold">1234-5678-9012-3456</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 mt-3">Silakan transfer ke rekening di atas dan upload bukti pembayaran</p>
+                                </div>
+                            </div>
+
+                            <!-- QRIS Info (shown when QRIS is selected) -->
+                            <div id="qris-info" class="mt-4 hidden">
+                                <div class="bg-secondary border border-gray-700 rounded p-4">
+                                    <h3 class="text-lg font-bold text-accent mb-3">QRIS Payment</h3>
+                                    <div class="text-center">
+                                        <div class="w-48 h-48 bg-gray-900 border border-gray-700 mx-auto mb-3 flex items-center justify-center">
+                                            <div class="text-center">
+                                                <i data-feather="credit-card" class="w-16 h-16 text-gray-600 mx-auto mb-2"></i>
+                                                <p class="text-gray-500 text-sm">QRIS Dummy</p>
+                                                <p class="text-gray-600 text-xs mt-1">Scan untuk pembayaran</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-400">Scan QR code di atas untuk pembayaran QRIS</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Proof Upload (conditional) -->
                             <div id="proof-upload" class="mt-4 hidden">
                                 <label class="block text-gray-300 mb-2">Bukti Pembayaran *</label>
@@ -174,16 +213,28 @@
 </section>
 
 <script>
-// Show/hide proof upload based on payment method
+// Show/hide payment info sections based on payment method
 document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
     radio.addEventListener('change', function() {
         const proofUpload = document.getElementById('proof-upload');
-        if (this.value === 'TRANSFER' || this.value === 'QRIS') {
+        const bankInfo = document.getElementById('bank-info');
+        const qrisInfo = document.getElementById('qris-info');
+        
+        // Hide all sections first
+        bankInfo.classList.add('hidden');
+        qrisInfo.classList.add('hidden');
+        proofUpload.classList.add('hidden');
+        
+        // Show relevant sections based on payment method
+        if (this.value === 'TRANSFER') {
+            bankInfo.classList.remove('hidden');
             proofUpload.classList.remove('hidden');
-            // Make proof required for these methods
+            proofUpload.querySelector('input[type="file"]').required = true;
+        } else if (this.value === 'QRIS') {
+            qrisInfo.classList.remove('hidden');
+            proofUpload.classList.remove('hidden');
             proofUpload.querySelector('input[type="file"]').required = true;
         } else {
-            proofUpload.classList.add('hidden');
             proofUpload.querySelector('input[type="file"]').required = false;
         }
     });
