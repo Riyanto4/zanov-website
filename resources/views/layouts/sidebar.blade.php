@@ -2,7 +2,7 @@
         <div class="hidden md:flex md:flex-shrink-0">
             <div class="flex flex-col w-64 bg-zanov-orange text-zanov-white">
                 <div class="flex items-center justify-center h-16 px-4 border-b border-zanov-light">
-                    <div class="text-2xl font-bold tracking-wider">ZANOV</div>
+                    <a href="/" class="text-2xl font-bold tracking-wider text-zanov-white hover:text-zanov-light transition-colors duration-200">ZANOV</a>
                 </div>
                 <div class="flex flex-col flex-grow px-4 py-4 overflow-y-auto">
                    <nav class="flex-1 space-y-2">
