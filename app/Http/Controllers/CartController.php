@@ -23,7 +23,10 @@ class CartController extends Controller
         // Ambil 4 produk rekomendasi berdasarkan asosiasi
         $bestSellingProducts = $this->getAssociationBasedProducts(4);
 
-        return view('cart.index', compact('cart', 'bestSellingProducts'));
+        // Ambil produk rekomendasi menggunakan algoritma asosiasi sederhana
+        $recommendedProducts = $this->getSimpleAssociationProducts(5);
+
+        return view('cart.index', compact('cart', 'bestSellingProducts', 'recommendedProducts'));
     }
 
     // Method untuk mendapatkan produk rekomendasi berdasarkan algoritma asosiasi
@@ -181,6 +184,87 @@ class CartController extends Controller
                 }
             ], 'quantity')
             ->orderBy('transaction_items_sum_quantity', 'desc')
+            ->take($limit)
+            ->get();
+    }
+
+    // Method untuk mendapatkan produk rekomendasi menggunakan algoritma asosiasi sederhana
+    private function getSimpleAssociationProducts($limit = 5)
+    {
+        // Ambil semua transaksi yang sudah dibayar
+        $transactions = Transaction::where('payment_status', 'PAID')
+            ->with('items.product')
+            ->get();
+
+        if ($transactions->isEmpty()) {
+            return collect();
+        }
+
+        // Group produk berdasarkan transaction (user pesan lebih dari 1 produk)
+        $transactionProducts = [];
+        foreach ($transactions as $transaction) {
+            $productIds = $transaction->items->pluck('product_id')->toArray();
+            if (count($productIds) > 1) {
+                $transactionProducts[] = $productIds;
+            }
+        }
+
+        if (empty($transactionProducts)) {
+            return collect();
+        }
+
+        // Hitung frekuensi setiap produk
+        $productFrequency = [];
+        foreach ($transactionProducts as $products) {
+            foreach ($products as $productId) {
+                if (!isset($productFrequency[$productId])) {
+                    $productFrequency[$productId] = 0;
+                }
+                $productFrequency[$productId]++;
+            }
+        }
+
+        // Cari produk terlaris yang memiliki pasangan (user pesan lebih dari 1)
+        $bestSellingProductId = null;
+        $maxFrequency = 0;
+
+        foreach ($productFrequency as $productId => $frequency) {
+            if ($frequency > $maxFrequency) {
+                // Pastikan produk ini memiliki pasangan di transaksi
+                foreach ($transactionProducts as $products) {
+                    if (in_array($productId, $products) && count($products) > 1) {
+                        $bestSellingProductId = $productId;
+                        $maxFrequency = $frequency;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!$bestSellingProductId) {
+            return collect();
+        }
+
+        // Cari semua pasangan dari produk terlaris tersebut
+        $pairedProductIds = [];
+        foreach ($transactionProducts as $products) {
+            if (in_array($bestSellingProductId, $products)) {
+                foreach ($products as $productId) {
+                    if ($productId != $bestSellingProductId && !in_array($productId, $pairedProductIds)) {
+                        $pairedProductIds[] = $productId;
+                    }
+                }
+            }
+        }
+
+        if (empty($pairedProductIds)) {
+            return collect();
+        }
+
+        // Ambil data produk dengan limit
+        return Product::whereIn('id', $pairedProductIds)
+            ->where('is_active', 1)
+            ->where('stock', '>', 0)
             ->take($limit)
             ->get();
     }

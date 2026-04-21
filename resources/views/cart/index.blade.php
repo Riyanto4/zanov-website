@@ -202,6 +202,90 @@
             </div>
             @endif
         </div>
+
+        <!-- Recommended Products Banner Section -->
+        @if($recommendedProducts && $recommendedProducts->count() > 0)
+        <div class="mt-12">
+            <div class="bg-primary border border-gray-800 p-8">
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-feather="zap" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-purple-400 uppercase tracking-tight mb-2">Produk Rekomendasi</h2>
+                    <p class="text-gray-400">Berdasarkan algoritma asosiasi - produk yang sering dibeli bersama</p>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    @foreach($recommendedProducts as $product)
+                    <div class="group border border-gray-800 hover:border-purple-400 transition duration-300 p-4">
+                        <!-- Product Image -->
+                        <div class="w-full h-40 bg-gray-900 border border-gray-700 group-hover:border-purple-400 transition duration-300 mb-4">
+                            @if($product->photo)
+                                <img src="{{ Storage::url($product->photo) }}" 
+                                     alt="{{ $product->name }}" 
+                                     class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <i data-feather="image" class="w-12 h-12 text-gray-600"></i>
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- Product Info -->
+                        <h4 class="font-bold text-purple-400 group-hover:text-white transition duration-300 text-sm leading-tight mb-2">
+                            {{ $product->name }}
+                        </h4>
+                        <p class="text-purple-400 font-bold text-lg mb-3">Rp{{ number_format($product->price, 2) }}</p>
+                        
+                        <!-- Stock Badge -->
+                        <div class="flex items-center space-x-2 mb-3">
+                            @if($product->stock > 0)
+                                <span class="text-green-400 text-xs">✓ Tersedia</span>
+                            @else
+                                <span class="text-red-400 text-xs">✗ Stok Habis</span>
+                            @endif
+                            
+                            <!-- Recommendation Badge -->
+                            <div class="flex items-center text-purple-400">
+                                <i data-feather="trending-up" class="w-3 h-3"></i>
+                                <span class="text-xs ml-1">Rekomendasi</span>
+                            </div>
+                        </div>
+
+                        <!-- Add to Cart Button -->
+                        @if($product->stock > 0)
+                        <form action="{{ route('cart.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button type="submit" 
+                                    class="w-full border border-purple-400 text-purple-400 text-sm py-2 uppercase tracking-wider hover:bg-purple-400 hover:text-primary transition duration-300 flex items-center justify-center space-x-2">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                                <span>Tambah ke Keranjang</span>
+                            </button>
+                        </form>
+                        @else
+                        <button disabled 
+                                class="w-full border border-gray-600 text-gray-600 text-sm py-2 uppercase tracking-wider cursor-not-allowed flex items-center justify-center space-x-2">
+                            <i data-feather="x" class="w-4 h-4"></i>
+                            <span>Stok Habis</span>
+                        </button>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+
+                <!-- Call to Action -->
+                <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                    <a href="{{ route('catalogue') }}" 
+                       class="inline-block border border-purple-400 text-purple-400 px-8 py-3 text-sm uppercase tracking-wider hover:bg-purple-400 hover:text-primary transition duration-300">
+                        Lihat Semua Produk
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </section>
 
