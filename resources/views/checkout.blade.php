@@ -95,13 +95,11 @@
                                 <div class="bg-secondary border border-gray-700 rounded p-4">
                                     <h3 class="text-lg font-bold text-accent mb-3">QRIS Payment</h3>
                                     <div class="text-center">
-                                        <div class="w-48 h-48 bg-gray-900 border border-gray-700 mx-auto mb-3 flex items-center justify-center">
-                                            <div class="text-center">
-                                                <i data-feather="credit-card" class="w-16 h-16 text-gray-600 mx-auto mb-2"></i>
-                                                <p class="text-gray-500 text-sm">QRIS Dummy</p>
-                                                <p class="text-gray-600 text-xs mt-1">Scan untuk pembayaran</p>
-                                            </div>
-                                        </div>
+                                        <div class="w-48 h-48 mx-auto mb-3">
+                                            <img src="{{ asset('img/qris.jpeg') }}" 
+                                                 alt="QRIS Payment" 
+                                                 class="w-full h-full object-cover border border-gray-700">
+                                        </img>
                                         <p class="text-sm text-gray-400">Scan QR code di atas untuk pembayaran QRIS</p>
                                     </div>
                                 </div>
