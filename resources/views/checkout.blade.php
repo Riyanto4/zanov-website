@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary min-h-screen">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-6xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-4 uppercase tracking-tight">Checkout</h1>
@@ -13,9 +13,9 @@
             <form action="{{ route('transactions.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="flex flex-col lg:flex-row gap-8">
                     <!-- Left Column - Customer Info & Payment -->
-                    <div class="space-y-6">
+                    <div class="w-full lg:w-2/3 space-y-6">
                         <!-- Customer Information -->
                         <div class="bg-primary border border-gray-800 rounded-none p-6">
                             <h2 class="text-2xl font-bold text-accent mb-4">Informasi Pelanggan</h2>
@@ -39,6 +39,16 @@
                                               required
                                               class="w-full px-4 py-3 bg-secondary border border-gray-700 text-accent placeholder-gray-500 focus:outline-none focus:border-accent transition duration-300 resize-none"></textarea>
                                 </div>
+                                
+                                <div>
+                                    <label for="phone" class="block text-gray-300 mb-2">Nomor Telepon *</label>
+                                    <input type="tel" 
+                                           id="phone"
+                                           name="phone" 
+                                           placeholder="08123456789"
+                                           required
+                                           class="w-full px-4 py-3 bg-secondary border border-gray-700 text-accent placeholder-gray-500 focus:outline-none focus:border-accent transition duration-300">
+                                </div>
                             </div>
                         </div>
 
@@ -61,11 +71,6 @@
                                     <input type="radio" name="payment_method" value="QRIS" class="text-accent focus:ring-accent">
                                     <span class="text-gray-300">QRIS</span>
                                 </label>
-                            {{--     
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="radio" name="payment_method" value="COD" class="text-accent focus:ring-accent">
-                                    <span class="text-gray-300">Cash on Delivery (COD)</span>
-                                </label> --}}
                             </div>
 
                             <!-- Bank Transfer Info (shown when TRANSFER is selected) -->
@@ -99,7 +104,7 @@
                                             <img src="{{ asset('img/qris.jpeg') }}" 
                                                  alt="QRIS Payment" 
                                                  class="w-full h-full object-cover border border-gray-700">
-                                        </img>
+                                        </div>
                                         <p class="text-sm text-gray-400">Scan QR code di atas untuk pembayaran QRIS</p>
                                     </div>
                                 </div>
@@ -127,9 +132,9 @@
                     </div>
 
                     <!-- Right Column - Order Summary -->
-                    <div class="space-y-6">
+                    <div class="w-full lg:w-1/3 space-y-6">
                         <!-- Order Items -->
-                        <div class="bg-primary border border-gray-800 rounded-none">
+                        <div class="bg-primary border border-gray-800 rounded-none sticky top-6">
                             <div class="p-6 border-b border-gray-800">
                                 <h2 class="text-2xl font-bold text-accent">Ringkasan Pesanan</h2>
                             </div>
@@ -179,19 +184,23 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Checkout Button -->
+                            <div class="p-6 pt-0">
+                                <button type="submit" 
+                                        class="w-full bg-accent text-primary px-8 py-4 text-xl uppercase tracking-wider font-bold hover:bg-gray-200 transition duration-300 text-center">
+                                    Selesaikan Pesanan
+                                </button>
+                            </div>
+
+                            <!-- Back to Cart -->
+                            <div class="p-6 pt-0">
+                                <a href="{{ route('cart.index') }}" 
+                                   class="block w-full border border-accent text-accent px-8 py-4 text-center uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
+                                    Kembali ke Keranjang
+                                </a>
+                            </div>
                         </div>
-
-                        <!-- Checkout Button -->
-                        <button type="submit" 
-                                class="w-full bg-accent text-primary px-8 py-4 text-xl uppercase tracking-wider font-bold hover:bg-gray-200 transition duration-300 text-center">
-                            Selesaikan Pesanan
-                        </button>
-
-                        <!-- Back to Cart -->
-                        <a href="{{ route('cart.index') }}" 
-                           class="block w-full border border-accent text-accent px-8 py-4 text-center uppercase tracking-wider hover:bg-accent hover:text-primary transition duration-300">
-                            Kembali ke Keranjang
-                        </a>
                     </div>
                 </div>
             </form>
@@ -227,13 +236,19 @@ document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
         if (this.value === 'TRANSFER') {
             bankInfo.classList.remove('hidden');
             proofUpload.classList.remove('hidden');
-            proofUpload.querySelector('input[type="file"]').required = true;
+            if (proofUpload.querySelector('input[type="file"]')) {
+                proofUpload.querySelector('input[type="file"]').required = true;
+            }
         } else if (this.value === 'QRIS') {
             qrisInfo.classList.remove('hidden');
             proofUpload.classList.remove('hidden');
-            proofUpload.querySelector('input[type="file"]').required = true;
+            if (proofUpload.querySelector('input[type="file"]')) {
+                proofUpload.querySelector('input[type="file"]').required = true;
+            }
         } else {
-            proofUpload.querySelector('input[type="file"]').required = false;
+            if (proofUpload.querySelector('input[type="file"]')) {
+                proofUpload.querySelector('input[type="file"]').required = false;
+            }
         }
     });
 });
