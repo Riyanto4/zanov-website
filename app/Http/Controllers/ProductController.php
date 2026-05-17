@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -105,8 +106,10 @@ class ProductController extends Controller
 
         // Handle file upload
         if ($request->hasFile('photo')) {
-            $imagePath = $request->file('photo')->store('products', 'public');
-            $validated['photo'] = $imagePath;
+            $file = $request->file('photo');
+            // Membuat nama unik: bks-sepatu-zanov-171594.png
+            $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('products', $filename, 'public');
         }
 
         Product::create($validated);
