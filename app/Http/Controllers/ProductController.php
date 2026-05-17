@@ -106,10 +106,8 @@ class ProductController extends Controller
 
         // Handle file upload
         if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            // Membuat nama unik: bks-sepatu-zanov-171594.png
-            $filename = Str::slug($request->name) . '-' . time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('products', $filename, 'public');
+            $imagePath = $request->file('photo')->store('products', 'public');
+            $validated['photo'] = $imagePath;
         }
 
         Product::create($validated);
